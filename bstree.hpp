@@ -85,17 +85,21 @@ void Tree<T>::remove(const T& value) noexcept
 	switch (children)
 	{
 		case 1:
+		{
 			tmp = (root->left == nullptr) ? root->right : root->left;
 			(parent->left == root) ? parent->left = tmp : parent->right = tmp;
 			delete root, root = nullptr;
 			break;
+		}
 
 		case 2:
+		{
 			tmp = successor(value);
-			std::cout << std::endl << tmp->m_data << std::endl;
-			std::swap(root->m_data, tmp->m_data);
+			T tmp_data = tmp->m_data;
 			remove(tmp->m_data);
+			root->m_data = tmp_data;
 			break;
+		}
 
 		case 0:
 			delete root;
