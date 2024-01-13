@@ -1,5 +1,19 @@
 using namespace juju;
 
+
+
+template <typename T>
+Tree<T>::Tree(std::initializer_list<T> list)
+{
+	for (auto i : list)
+	{
+		this->insert(i);
+	}
+}
+
+
+
+
 template <typename T>
 Tree<T>::Node::Node(const T& value) : m_data{value} {}
 
@@ -43,19 +57,19 @@ size_t Tree<T>::_childcount(Node* root) const noexcept
 }
 
 template <typename T>
-typename Tree<T>::Node* Tree<T>::_parent(Node* parent, Node* child) const noexcept
+typename Tree<T>::Node* Tree<T>::_parent(Node* root, Node* child) const noexcept
 {
-	if (parent == nullptr)
+	if (root == nullptr || root == child)
 	{
 		return nullptr;
 	}
 
-	if (parent->left == child || parent->right == child)
+	if (root->left == child || root->right == child)
 	{
-		return parent;
+		return root;
 	}
 
-	return (child->m_data > parent->m_data) ? _parent(parent->right, child) : _parent(parent->left, child);
+	return (child->m_data > root->m_data) ? _parent(root->right, child) : _parent(root->left, child);
 }
 
 
@@ -69,18 +83,13 @@ typename Tree<T>::Node::Node& Tree<T>::Node::operator=(Node&& other)
 }
 
 
-template <typename T>
-void Tree<T>::remove(const T& value) noexcept
-{
-	Node* root = this->search(value);
-	Node* parent = _parent(this->m_root, _search(value, this->m_root));
-	Node* tmp = nullptr;
-	size_t children = _childcount(root);
 
-	if (root == nullptr)
-	{
-		return;
-	}
+template <typename T>
+void Tree<T>::_remove(Node* root, Node* parent, const size_t children) noexcept
+{
+
+	Node* tmp = nullptr;
+
 
 	switch (children)
 	{
@@ -94,10 +103,14 @@ void Tree<T>::remove(const T& value) noexcept
 
 		case 2:
 		{
-			tmp = successor(value);
-			T tmp_data = tmp->m_data;
-			remove(tmp->m_data);
-			root->m_data = tmp_data;
+			tmp = successor(root->m_data);
+
+			T data_t = tmp->m_data;
+
+			_remove(tmp, _parent(this->m_root, tmp), _childcount(tmp));
+
+			root->m_data = data_t;
+
 			break;
 		}
 
@@ -105,13 +118,50 @@ void Tree<T>::remove(const T& value) noexcept
 			delete root;
 			(parent->left == root) ? parent->left = nullptr : parent->right = nullptr;
 	}
+}
 
 
+template <typename T>
+void Tree<T>::remove(const T& value) noexcept
+{
+	if (m_root->m_data == value)
+	{
+		delete m_root;
+		return;
+	}
+
+	Node* root = this->search(value);
+	Node* parent = _parent(this->m_root, _search(value, this->m_root));
+
+	if (root == nullptr)
+	{
+		return;
+	}
+
+	_remove(root, parent, _childcount(root));
 
 }
 
 
+template <typename T>
+void Tree<T>::_clear(Node* root) noexcept
+{
+	if (root == nullptr)
+	{
+		return;
+	}
 
+	_clear(root->left);
+	_clear(root->right);
+	remove(root->m_data);
+}
+
+
+// template <typename T>
+// void Tree<T>::clear() noexcept
+// {
+// 	_clear(m_root);
+// }
 
 
 template <typename T>
@@ -337,5 +387,5 @@ typename Tree<T>::Node* Tree<T>::predecessor(const T& value) noexcept
 template <typename T>
 Tree<T>::~Tree()
 {
-	delete[] m_root;
+	_clear(m_root);
 }

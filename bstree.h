@@ -9,6 +9,11 @@ namespace juju
 	class Tree
 	{
 
+	public:
+
+		Tree(std::initializer_list<T>);
+		Tree() = default;
+
 
 	private:
 
@@ -44,6 +49,9 @@ namespace juju
 		Node* _successor(Node*) noexcept;
 		size_t _childcount(Node*) const noexcept;
 		Node* _parent(Node*, Node*) const noexcept;
+		void _remove(Node*, Node*, const size_t) noexcept;
+		void _clear(Node*) noexcept;
+
 
 	public:
 
@@ -61,6 +69,7 @@ namespace juju
 		Node const* find_max() const noexcept;
 		Node* predecessor(const T&) noexcept;
 		Node* successor(const T&) noexcept;
+		//void clear() noexcept;
 	};
 
 
