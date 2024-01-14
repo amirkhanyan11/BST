@@ -13,6 +13,7 @@ namespace juju
 
 		Tree(std::initializer_list<T>);
 		Tree() = default;
+		~Tree();
 
 
 	private:
@@ -22,9 +23,14 @@ namespace juju
 
 		public:
 
+			friend class Tree;
 			Node(const T&);
 			Node& operator=(Node&& other);
 
+			void display() const noexcept;
+
+		private:
+		
 			T m_data = T{};
 			Node* left{nullptr};
 			Node* right{nullptr};
@@ -39,7 +45,6 @@ namespace juju
 		void _inorder(const Node*) const noexcept;
 		void _preorder(const Node*) const noexcept;
 		void _postorder(const Node*) const noexcept;
-		void _process_node(const Node*) const noexcept;
 		Node const* _find_min(Node const*) const noexcept;
 		Node const* _find_max(Node const*) const noexcept;
 		Node* _predecessor(Node*) noexcept;
@@ -48,11 +53,11 @@ namespace juju
 		Node* _parent(Node*, Node*) const noexcept;
 		void _remove(Node*, Node*, const size_t) noexcept;
 		void _clear(Node*) noexcept;
+		size_t _size(Node const*) const noexcept;
+		size_t _height(Node const*) const noexcept;
 
 
 	public:
-
-		~Tree();
 
 		void insert(const T& value);
 		void remove(const T& value) noexcept;
@@ -66,6 +71,8 @@ namespace juju
 		Node const* find_max() const noexcept;
 		Node* predecessor(const T&) noexcept;
 		Node* successor(const T&) noexcept;
+		size_t size() const noexcept;
+		size_t height() const noexcept;
 	};
 
 

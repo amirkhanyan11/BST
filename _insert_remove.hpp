@@ -14,8 +14,6 @@ void Tree<T>::_insert(const T& value, Node*& root)
 		_insert(value, root->left);
 }
 
-
-
 template <typename T>
 void Tree<T>::insert(const T& value)
 {

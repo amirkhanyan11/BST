@@ -1,12 +1,10 @@
 
 
-
 template <typename T>
-void Tree<T>::_process_node(const Node* root) const noexcept
+void Tree<T>::Node::display() const noexcept
 {
-	std::cout << root->m_data << "   ";
+	std::cout << this->m_data << "   ";
 }
-
 
 template <typename T>
 void Tree<T>::_inorder(const Node* root) const noexcept
@@ -18,7 +16,7 @@ void Tree<T>::_inorder(const Node* root) const noexcept
 
 	_inorder(root->left);
 
-	_process_node(root);
+	root->display();
 
 	_inorder(root->right);
 }
@@ -31,7 +29,7 @@ void Tree<T>::_preorder(const Node* root) const noexcept
 		return;
 	}
 
-	_process_node(root);
+	root->display();
 
 	_preorder(root->left);
 
@@ -51,7 +49,7 @@ void Tree<T>::_postorder(const Node* root) const noexcept
 
 	_postorder(root->right);
 
-	_process_node(root);
+	root->display();
 }
 
 

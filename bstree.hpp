@@ -4,6 +4,8 @@ using namespace juju;
 #include "_find_.hpp"
 #include "_insert_remove.hpp"
 #include "_predecessor_successor.hpp"
+#include "_size_height.hpp"
+#include "_helpers.hpp"
 
 template <typename T>
 Tree<T>::Tree(std::initializer_list<T> list)
@@ -13,7 +15,6 @@ Tree<T>::Tree(std::initializer_list<T> list)
 		this->insert(i);
 	}
 }
-
 
 template <typename T>
 typename Tree<T>::Node::Node& Tree<T>::Node::operator=(Node&& other)
