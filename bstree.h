@@ -28,6 +28,9 @@ namespace juju
 			Node& operator=(Node&& other);
 
 			void display() const noexcept;
+			const T& get_value() const noexcept;
+			T& get_value() noexcept;
+
 
 		private:
 		

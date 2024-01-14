@@ -123,4 +123,17 @@ void Tree<T>::_clear(Node* root) noexcept
 	remove(root->m_data);
 }
 
+template <typename T>
+const T& Tree<T>::Node::get_value() const noexcept
+{
+	return this->m_data;
+}
 
+template <typename T>
+T& Tree<T>::Node::get_value() noexcept
+{
+	return const_cast<T&>(
+
+		static_cast<const Node*>(this)->get_value()
+	);
+}
