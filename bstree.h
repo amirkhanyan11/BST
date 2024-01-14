@@ -32,7 +32,6 @@ namespace juju
 
 		Node* m_root = nullptr;
 
-		// void _clear(Node* root = m_root) noexcept;
 
 		void _insert(const T& value, Node*& root);
 		Node* _search(const T& value, Node* root) const noexcept;
@@ -41,8 +40,6 @@ namespace juju
 		void _preorder(const Node*) const noexcept;
 		void _postorder(const Node*) const noexcept;
 		void _process_node(const Node*) const noexcept;
-		// Node* _find_min(Node*) noexcept;
-		// Node* _find_max(Node*) noexcept;
 		Node const* _find_min(Node const*) const noexcept;
 		Node const* _find_max(Node const*) const noexcept;
 		Node* _predecessor(Node*) noexcept;
@@ -69,7 +66,6 @@ namespace juju
 		Node const* find_max() const noexcept;
 		Node* predecessor(const T&) noexcept;
 		Node* successor(const T&) noexcept;
-		//void clear() noexcept;
 	};
 
 
