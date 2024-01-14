@@ -4,11 +4,7 @@
 
 int main()
 {
-	juju::Tree<int> tree = {64, 20, 100, 15, 40, 35, 50, 17};
+	juju::Tree<int> tree = {300, 200, 100, 120, 140, 130, 135, 132, 133};
 
-	tree.remove(20);
-	tree.inorder();
-	std::cout << std::endl;
-	//tree.clear();
-
+	std::cout << tree.successor(135)->m_data << std::endl;
 }

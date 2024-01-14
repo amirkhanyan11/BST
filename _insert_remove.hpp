@@ -66,7 +66,7 @@ void Tree<T>::_remove(Node* root, Node* parent, const size_t children) noexcept
 		{
 			tmp = (root->left == nullptr) ? root->right : root->left;
 			(parent->left == root) ? parent->left = tmp : parent->right = tmp;
-			delete root, root = nullptr;
+			delete root;
 			break;
 		}
 

@@ -23,8 +23,6 @@ typename Tree<T>::Node* Tree<T>::_search(const T& value, Node* root) const noexc
 
 
 
-
-
 template <typename T>
 typename Tree<T>::Node* Tree<T>::search(const T& value) const noexcept
 {
