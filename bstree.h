@@ -25,7 +25,7 @@ namespace juju
 			Node(const T&);
 			Node& operator=(Node&& other);
 
-			T m_data;
+			T m_data = T{};
 			Node* left{nullptr};
 			Node* right{nullptr};
 		};
