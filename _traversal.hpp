@@ -1,43 +1,43 @@
+#include "bstree.h"
+
+using namespace juju;
 
 
-template <typename T>
-void Tree<T>::Node::display() const noexcept
-{
-	std::cout << this->m_data << "   ";
-}
-
-template <typename T>
-void Tree<T>::_inorder(const Node* root) const noexcept
+template <typename T, typename node_type>
+template <typename func>
+void Tree<T, node_type>::_inorder(const_node_pointer root, func f) const noexcept
 {
 	if(root == nullptr)
 	{
 		return;
 	}
 
-	_inorder(root->left);
+	_inorder(root->left, f);
 
-	root->display();
+	f(root);
 
-	_inorder(root->right);
+	_inorder(root->right, f);
 }
 
-template <typename T>
-void Tree<T>::_preorder(const Node* root) const noexcept
+template <typename T, typename node_type>
+template <typename func>
+void Tree<T, node_type>::_preorder(const_node_pointer root, func f) const noexcept
 {
 	if(root == nullptr)
 	{
 		return;
 	}
 
-	root->display();
+	f(root);
 
-	_preorder(root->left);
+	_preorder(root->left, f);
 
-	_preorder(root->right);
+	_preorder(root->right, f);
 }
 
-template <typename T>
-void Tree<T>::_postorder(const Node* root) const noexcept
+template <typename T, typename node_type>
+template <typename func>
+void Tree<T, node_type>::_postorder(const_node_pointer root, func f) const noexcept
 {
 	if(root == nullptr)
 	{
@@ -45,28 +45,32 @@ void Tree<T>::_postorder(const Node* root) const noexcept
 	}
 
 
-	_postorder(root->left);
+	_postorder(root->left, f);
 
-	_postorder(root->right);
+	_postorder(root->right, f);
 
-	root->display();
+	f(root);
+
 }
 
 
-template <typename T>
-void Tree<T>::inorder() const noexcept
+template <typename T, typename node_type>
+template <typename func>
+void Tree<T, node_type>::inorder(func f) const noexcept
 {
-	_inorder(this->m_root);
+	_inorder(this->m_root, f);
 }
 
-template <typename T>
-void Tree<T>::preorder() const noexcept
+template <typename T, typename node_type>
+template <typename func>
+void Tree<T, node_type>::preorder(func f) const noexcept
 {
-	_preorder(this->m_root);
+	_preorder(this->m_root, f);
 }
 
-template <typename T>
-void Tree<T>::postorder() const noexcept
+template <typename T, typename node_type>
+template <typename func>
+void Tree<T, node_type>::postorder(func f) const noexcept
 {
-	_postorder(this->m_root);
+	_postorder(this->m_root, f);
 }

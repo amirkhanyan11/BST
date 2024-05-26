@@ -1,19 +1,21 @@
+#include "bstree.h"
 
+using namespace juju;
 
-template <typename T>
-typename Tree<T>::Node const* Tree<T>::find_min() const noexcept
+template <typename T, typename node_type>
+typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::find_min() const noexcept
 {
 	return _find_min(this->m_root);
 }
 
-template <typename T>
-typename Tree<T>::Node const* Tree<T>::find_max() const noexcept
+template <typename T, typename node_type>
+typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::find_max() const noexcept
 {
 	return _find_max(this->m_root);
 }
 
-template <typename T>
-typename Tree<T>::Node* Tree<T>::find_min() noexcept
+template <typename T, typename node_type>
+typename Tree<T, node_type>::node_pointer Tree<T, node_type>::find_min() noexcept
 {
 	return const_cast<Node*>(
 
@@ -21,8 +23,8 @@ typename Tree<T>::Node* Tree<T>::find_min() noexcept
 	);
 }
 
-template <typename T>
-typename Tree<T>::Node* Tree<T>::find_max() noexcept
+template <typename T, typename node_type>
+typename Tree<T, node_type>::node_pointer Tree<T, node_type>::find_max() noexcept
 {
 	return const_cast<Node*>(
 
@@ -30,8 +32,8 @@ typename Tree<T>::Node* Tree<T>::find_max() noexcept
 	);
 }
 
-template <typename T>
-typename Tree<T>::Node const* Tree<T>::_find_min(Node const* root) const noexcept
+template <typename T, typename node_type>
+typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::_find_min(const_node_pointer root) const noexcept
 {
 	if (root->left == nullptr)
 	{
@@ -41,8 +43,8 @@ typename Tree<T>::Node const* Tree<T>::_find_min(Node const* root) const noexcep
 	return _find_min(root->left);
 }
 
-template <typename T>
-typename Tree<T>::Node const* Tree<T>::_find_max(Node const* root) const noexcept
+template <typename T, typename node_type>
+typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::_find_max(const_node_pointer root) const noexcept
 {
 	if (root->right == nullptr)
 	{
