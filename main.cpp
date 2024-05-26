@@ -10,8 +10,7 @@ int main()
 {
 	BinarySearchTree<int> tree = {5, 2, 10, 8, 6, 9, 12};
 
-
-	// tree.inorder([](const Node<int> *root){if (root->parent) cout << root->m_data << " : " << root->parent->m_data << endl;});
+	tree.inorder([](const Node<int> *root){if (root->parent) cout << root->m_data << " : " << root->parent->m_data << endl;});
 
 
 	// std::cout << tree.successor(135)->get_value() << std::endl;

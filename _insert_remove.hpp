@@ -42,7 +42,7 @@ void Tree<T, node_type>::remove(const_reference value) noexcept
 		return;
 	}
 
-	_remove(root, root->parent, _childcount(root));
+	this->_remove(root);
 
 }
 
@@ -55,9 +55,9 @@ void Tree<T, node_type>::_clear(node_pointer root) noexcept
 		return;
 	}
 
-	_clear(root->left);
-	_clear(root->right);
-	remove(root->m_data);
+	this->_clear(root->left);
+	this->_clear(root->right);
+	this->remove(root->m_data);
 }
 
 template <typename T>
@@ -73,4 +73,68 @@ T& Node<T>::get_value() noexcept
 
 		static_cast<const Node<T>*>(this)->get_value()
 	);
+}
+
+template <typename T, typename node_type>
+void Tree<T, node_type>::_remove(Tree<T, node_type>::node_pointer root) noexcept
+{
+
+	node_pointer tmp = nullptr;
+
+    const size_type children = this->_childcount(root);
+    auto parent = root->parent;
+
+
+	switch (children)
+	{
+		case 1:
+		{
+			tmp = (root->left == nullptr) ? root->right : root->left;
+			(parent->left == root) ? parent->left = tmp : parent->right = tmp;
+			delete root;
+			break;
+		}
+
+		case 2:
+		{
+			tmp = this->successor(root->m_data);
+
+			T data_t = tmp->m_data;
+
+			this->_remove(tmp);
+
+			root->m_data = data_t;
+
+			break;
+		}
+
+		case 0:
+			delete root;
+			(parent->left == root) ? parent->left = nullptr : parent->right = nullptr;
+	}
+}
+
+
+template <typename T, typename node_type>
+typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::_find(Tree<T, node_type>::const_reference value, Tree<T, node_type>::node_pointer root) const noexcept
+{
+	if (root == nullptr)
+	{
+		return nullptr;
+	}
+
+	if (root->m_data == value)
+	{
+		return root;
+	}
+
+	else if (root->m_data < value)
+	{
+		return this->_find(value, root->right);
+	}
+
+	else
+    {
+		return this->_find(value, root->left);
+    }
 }

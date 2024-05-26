@@ -27,11 +27,11 @@ typename Tree<T, node_type>::node_pointer Tree<T, node_type>::_successor(node_po
 template <typename T, typename node_type>
 typename Tree<T, node_type>::node_pointer Tree<T, node_type>::successor(const_reference value) noexcept
 {
-	return Tree<T, node_type>::_successor(_find(value, this->m_root));
+	return Tree<T, node_type>::_successor(find(value));
 }
 
 template <typename T, typename node_type>
 typename Tree<T, node_type>::node_pointer Tree<T, node_type>::predecessor(const_reference value) noexcept
 {
-	return Tree<T, node_type>::_predecessor(_find(value, this->m_root));
+	return Tree<T, node_type>::_predecessor(find(value));
 }
