@@ -1,4 +1,4 @@
-using namespace juju;
+#include "bstree.h"
 #include "_search.hpp"
 #include "_traversal.hpp"
 #include "_find_.hpp"
@@ -7,8 +7,12 @@ using namespace juju;
 #include "_size_height.hpp"
 #include "_helpers.hpp"
 
+#include "binary_search_tree.hpp"
+using namespace juju;
+
+
 template <typename T>
-Tree<T>::Tree(std::initializer_list<T> list)
+BinarySearchTree<T>::BinarySearchTree(std::initializer_list<T> list)
 {
 	for (auto i : list)
 	{
@@ -17,7 +21,7 @@ Tree<T>::Tree(std::initializer_list<T> list)
 }
 
 template <typename T>
-typename Tree<T>::Node::Node& Tree<T>::Node::operator=(Node&& other)
+Node<T>& Node<T>::operator=(Node<T>&& other)
 {
 	m_data = other.m_data;
 	left = other.left;
@@ -27,12 +31,13 @@ typename Tree<T>::Node::Node& Tree<T>::Node::operator=(Node&& other)
 
 
 template <typename T>
-Tree<T>::Node::Node(const T& value) : m_data{value} {}
+Node<T>::Node(const T& value, Node<T> *p) : m_data{value}, parent{p} {}
 
 
 
-template <typename T>
-Tree<T>::~Tree()
+template <typename T, typename node_type>
+Tree<T, node_type>::~Tree()
 {
 	_clear(m_root);
+	this->m_root = nullptr;
 }

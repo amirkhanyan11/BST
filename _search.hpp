@@ -1,30 +1,16 @@
+#include "bstree.h"
 
-template <typename T>
-typename Tree<T>::Node* Tree<T>::_search(const T& value, Node* root) const noexcept
+using namespace juju;
+
+
+template <typename T, typename node_type>
+typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::find(const_reference value) const noexcept
 {
-	if (root == nullptr)
-	{
-		return nullptr;
-	}
-
-	if (root->m_data == value)
-	{
-		return root;
-	}
-
-	else if (root->m_data < value)
-	{
-		return _search(value, root->right);
-	}
-
-	else
-		return _search(value, root->left);
+	return this->_find(value, this->m_root);
 }
 
-
-
-template <typename T>
-typename Tree<T>::Node* Tree<T>::search(const T& value) const noexcept
+template <typename T, typename node_type>
+typename Tree<T, node_type>::node_pointer Tree<T, node_type>::find(const_reference value) noexcept
 {
-	return Tree<T>::_search(value, this->m_root);
+	return const_cast<node_pointer>(this->_find(value, this->m_root));
 }

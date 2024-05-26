@@ -1,28 +1,17 @@
-template <typename T>
-void Tree<T>::_insert(const T& value, Node*& root)
+#include "bstree.h"
+
+using namespace juju;
+
+template <typename T, typename node_type>
+void Tree<T, node_type>::insert(const_reference value)
 {
-	if (root == nullptr)
-	{
-		root = new Node{value};
-		return;
-	}
-
-	else if (root->m_data < value)
-		_insert(value, root->right);
-
-	else if (root->m_data > value)
-		_insert(value, root->left);
+	this->_insert(value, this->m_root);
 }
 
-template <typename T>
-void Tree<T>::insert(const T& value)
+template <typename T, typename node_type>
+typename Tree<T, node_type>::size_type Tree<T, node_type>::_childcount(node_pointer root) const noexcept
 {
-	_insert(value, this->m_root);
-}
 
-template <typename T>
-size_t Tree<T>::_childcount(Node* root) const noexcept
-{
 	if (root->left == nullptr && root->right == nullptr)
 	{
 		return 0;
@@ -32,30 +21,68 @@ size_t Tree<T>::_childcount(Node* root) const noexcept
 	{
 		return 2;
 	}
+
 	return 1;
 }
 
-template <typename T>
-typename Tree<T>::Node* Tree<T>::_parent(Node* root, Node* child) const noexcept
+
+template <typename T, typename node_type>
+void Tree<T, node_type>::remove(const_reference value) noexcept
 {
-	if (root == nullptr || root == child)
+	if (m_root->m_data == value)
 	{
-		return nullptr;
+		delete m_root;
+		return;
 	}
 
-	if (root->left == child || root->right == child)
+	node_pointer root = this->find(value);
+
+	if (root == nullptr)
 	{
-		return root;
+		return;
 	}
 
-	return (child->m_data > root->m_data) ? _parent(root->right, child) : _parent(root->left, child);
+	this->_remove(root);
+
+}
+
+
+template <typename T, typename node_type>
+void Tree<T, node_type>::_clear(node_pointer root) noexcept
+{
+	if (root == nullptr)
+	{
+		return;
+	}
+
+	this->_clear(root->left);
+	this->_clear(root->right);
+	this->remove(root->m_data);
 }
 
 template <typename T>
-void Tree<T>::_remove(Node* root, Node* parent, const size_t children) noexcept
+const T& Node<T>::get_value() const noexcept
+{
+	return this->m_data;
+}
+
+template <typename T>
+T& Node<T>::get_value() noexcept
+{
+	return const_cast<T&>(
+
+		static_cast<const Node<T>*>(this)->get_value()
+	);
+}
+
+template <typename T, typename node_type>
+void Tree<T, node_type>::_remove(Tree<T, node_type>::node_pointer root) noexcept
 {
 
-	Node* tmp = nullptr;
+	node_pointer tmp = nullptr;
+
+    const size_type children = this->_childcount(root);
+    auto parent = root->parent;
 
 
 	switch (children)
@@ -70,11 +97,11 @@ void Tree<T>::_remove(Node* root, Node* parent, const size_t children) noexcept
 
 		case 2:
 		{
-			tmp = successor(root->m_data);
+			tmp = this->successor(root->m_data);
 
 			T data_t = tmp->m_data;
 
-			_remove(tmp, _parent(this->m_root, tmp), _childcount(tmp));
+			this->_remove(tmp);
 
 			root->m_data = data_t;
 
@@ -88,52 +115,26 @@ void Tree<T>::_remove(Node* root, Node* parent, const size_t children) noexcept
 }
 
 
-template <typename T>
-void Tree<T>::remove(const T& value) noexcept
-{
-	if (m_root->m_data == value)
-	{
-		delete m_root;
-		return;
-	}
-
-	Node* root = this->search(value);
-	Node* parent = _parent(this->m_root, _search(value, this->m_root));
-
-	if (root == nullptr)
-	{
-		return;
-	}
-
-	_remove(root, parent, _childcount(root));
-
-}
-
-
-template <typename T>
-void Tree<T>::_clear(Node* root) noexcept
+template <typename T, typename node_type>
+typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::_find(Tree<T, node_type>::const_reference value, Tree<T, node_type>::node_pointer root) const noexcept
 {
 	if (root == nullptr)
 	{
-		return;
+		return nullptr;
 	}
 
-	_clear(root->left);
-	_clear(root->right);
-	remove(root->m_data);
-}
+	if (root->m_data == value)
+	{
+		return root;
+	}
 
-template <typename T>
-const T& Tree<T>::Node::get_value() const noexcept
-{
-	return this->m_data;
-}
+	else if (root->m_data < value)
+	{
+		return this->_find(value, root->right);
+	}
 
-template <typename T>
-T& Tree<T>::Node::get_value() noexcept
-{
-	return const_cast<T&>(
-
-		static_cast<const Node*>(this)->get_value()
-	);
+	else
+    {
+		return this->_find(value, root->left);
+    }
 }
