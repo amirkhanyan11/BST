@@ -3,9 +3,9 @@
 using namespace juju;
 
 template <typename T, typename node_type>
-void Tree<T, node_type>::insert(const T& value)
+void Tree<T, node_type>::insert(const_reference value)
 {
-	_insert(value, this->m_root);
+	this->_insert(value, this->m_root);
 }
 
 template <typename T, typename node_type>
@@ -27,7 +27,7 @@ typename Tree<T, node_type>::size_type Tree<T, node_type>::_childcount(node_poin
 
 
 template <typename T, typename node_type>
-void Tree<T, node_type>::remove(const T& value) noexcept
+void Tree<T, node_type>::remove(const_reference value) noexcept
 {
 	if (m_root->m_data == value)
 	{
@@ -71,6 +71,6 @@ T& Node<T>::get_value() noexcept
 {
 	return const_cast<T&>(
 
-		static_cast<const node_pointer>(this)->get_value()
+		static_cast<const Node<T>*>(this)->get_value()
 	);
 }

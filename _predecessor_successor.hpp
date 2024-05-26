@@ -10,7 +10,7 @@ typename Tree<T, node_type>::node_pointer Tree<T, node_type>::_predecessor(node_
 	{
 		return root;
 	}
-	return const_cast<Node*>(_find_max(root->left));
+	return const_cast<Tree<T, node_type>::node_pointer>(_find_max(root->left));
 }
 
 template <typename T, typename node_type>
@@ -20,18 +20,18 @@ typename Tree<T, node_type>::node_pointer Tree<T, node_type>::_successor(node_po
 	{
 		return root;
 	}
-	return const_cast<Node*>(_find_min(root->right));
+	return const_cast<Tree<T, node_type>::node_pointer>(_find_min(root->right));
 }
 
 
 template <typename T, typename node_type>
 typename Tree<T, node_type>::node_pointer Tree<T, node_type>::successor(const_reference value) noexcept
 {
-	return Tree<T, node_type>::_successor(_search(value, this->m_root));
+	return Tree<T, node_type>::_successor(_find(value, this->m_root));
 }
 
 template <typename T, typename node_type>
 typename Tree<T, node_type>::node_pointer Tree<T, node_type>::predecessor(const_reference value) noexcept
 {
-	return Tree<T, node_type>::_predecessor(_search(value, this->m_root));
+	return Tree<T, node_type>::_predecessor(_find(value, this->m_root));
 }

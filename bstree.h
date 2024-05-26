@@ -74,11 +74,13 @@ namespace juju
 		const_node_pointer  _find_max(const_node_pointer) const noexcept;
 		node_pointer 		_predecessor(node_pointer) noexcept;
 		node_pointer 		_successor(node_pointer) noexcept;
-		size_type 			_childcount(node_pointer) const noexcept;
 		void 				_clear(node_pointer) noexcept;
 		size_type 			_size(const_node_pointer) const noexcept;
 		size_type 			_height(const_node_pointer) const noexcept;
 
+	protected:
+
+		size_type 			_childcount(node_pointer) const noexcept;
 
 	public:
 
@@ -105,18 +107,29 @@ namespace juju
 		size_type 			height() const noexcept;
 	};
 
-}
+
 
 
 template <typename T>
-class BinarySearchTree : public Tree<T>
+class BinarySearchTree : public Tree<T, Node<T>>
 {
+
+public:
+
+	using value_type = T;
+	using reference = value_type &;
+	using const_reference = const value_type &;
+	using size_type = std::size_t;
+	using pointer = value_type *;
+	using const_pointer = const value_type *;
+	using node_pointer =  Node<T> *;
+	using const_node_pointer = const  Node<T> *;
 
 public:
 
 	BinarySearchTree() = default;
 	BinarySearchTree(std::initializer_list<T>);
-	virtual ~BinarySearchTree();
+	virtual ~BinarySearchTree() = default;
 
 public:
 
@@ -130,4 +143,6 @@ public:
 
 #include "bstree.hpp"
 
+
+}
 #endif

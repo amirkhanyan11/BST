@@ -17,7 +17,7 @@ typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::find_max() c
 template <typename T, typename node_type>
 typename Tree<T, node_type>::node_pointer Tree<T, node_type>::find_min() noexcept
 {
-	return const_cast<Node*>(
+	return const_cast<Tree<T, node_type>::node_pointer>(
 
 		static_cast<const Tree*>(this)->find_min()
 	);
@@ -26,7 +26,7 @@ typename Tree<T, node_type>::node_pointer Tree<T, node_type>::find_min() noexcep
 template <typename T, typename node_type>
 typename Tree<T, node_type>::node_pointer Tree<T, node_type>::find_max() noexcept
 {
-	return const_cast<Node*>(
+	return const_cast<Tree<T, node_type>::node_pointer>(
 
 		static_cast<const Tree*>(this)->find_max()
 	);

@@ -20,7 +20,7 @@ void BinarySearchTree<T>::_insert(const_reference value, node_pointer& root, nod
 }
 
 template <typename T>
-void BinarySearchTree<T, node_type>::_remove(node_pointer root, node_pointer parent, const size_t children) noexcept
+void BinarySearchTree<T>::_remove(node_pointer root, node_pointer parent, const size_t children) noexcept
 {
 
 	node_pointer tmp = nullptr;
@@ -38,11 +38,11 @@ void BinarySearchTree<T, node_type>::_remove(node_pointer root, node_pointer par
 
 		case 2:
 		{
-			tmp = successor(root->m_data);
+			tmp = this->successor(root->m_data);
 
 			T data_t = tmp->m_data;
 
-			_remove(tmp, _parent(this->m_root, tmp), _childcount(tmp));
+			_remove(tmp, tmp->parent, this->_childcount(tmp));
 
 			root->m_data = data_t;
 
@@ -57,7 +57,7 @@ void BinarySearchTree<T, node_type>::_remove(node_pointer root, node_pointer par
 
 
 template <typename T>
-node_type* BinarySearchTree<T, node_type>::_find(const T& value, node_type* root) const noexcept
+typename BinarySearchTree<T>::node_pointer BinarySearchTree<T>::_find(const_reference value, node_pointer root) const noexcept
 {
 	if (root == nullptr)
 	{
@@ -71,9 +71,11 @@ node_type* BinarySearchTree<T, node_type>::_find(const T& value, node_type* root
 
 	else if (root->m_data < value)
 	{
-		return _search(value, root->right);
+		return _find(value, root->right);
 	}
 
 	else
-		return _search(value, root->left);
+    {
+		return _find(value, root->left);
+    }
 }

@@ -6,6 +6,8 @@
 #include "_predecessor_successor.hpp"
 #include "_size_height.hpp"
 #include "_helpers.hpp"
+
+#include "binary_search_tree.hpp"
 using namespace juju;
 
 
@@ -37,4 +39,5 @@ template <typename T, typename node_type>
 Tree<T, node_type>::~Tree()
 {
 	_clear(m_root);
+	this->m_root = nullptr;
 }
