@@ -134,6 +134,9 @@ void RedBlackTree<T>::_restore(node_pointer& root)
 		return;
 	}
 
+	if (root->parent->m_color == __color::BLACK)
+		return;
+
 	node_pointer uncle = this->_get_uncle(root);
 
 	if (uncle == nullptr && (root->parent == nullptr || root->parent->parent == nullptr)) return; // ??
@@ -170,6 +173,7 @@ void RedBlackTree<T>::_restore(node_pointer& root)
 			{
 				_recolor(root->parent);
 				_recolor(root->parent->parent);
+
 				_lrotate(root->parent->parent);
 			}
 
@@ -177,6 +181,7 @@ void RedBlackTree<T>::_restore(node_pointer& root)
 			{
 				_recolor(root->parent);
 				_recolor(root->parent->parent);
+
 				_rrotate(root->parent->parent);
 			}
 		}
