@@ -9,12 +9,18 @@ using std::cout, std::endl, cocobolo::Node, cocobolo::RBnode, cocobolo::RedBlack
 
 int main()
 {
-	RedBlackTree<int> tree = {8, 5, 15, 12, 19, 23, 9, 13};
+	RedBlackTree<int> tree = {8, 5, 15, 12, 19, 23, 9, 13, 10};
+
+	// tree.rrotate( tree.find(15) );
 
 	tree.preorder([](const RBnode<int> *root){
 
 		std::string col = (root->m_color == cocobolo::__color::RED) ? "RED" : "BLACK";
-		cout << root->m_data << " : " << col << endl;
+		
+		if (root->parent == nullptr)
+				std::cout << root->m_data << " : " << col  << " : Parent -> X" << std::endl;
+		else
+			std::cout << root->m_data << " : " << col  << " : Parent -> " << root->parent->m_data << std::endl;
 
 	});
 

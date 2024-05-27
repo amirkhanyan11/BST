@@ -32,12 +32,21 @@ public:
     RedBlackTree(std::initializer_list<value_type>);
 	virtual ~RedBlackTree() = default;
 
+	//x
+	void rrotate(node_pointer node)
+	{
+		_rrotate(node);
+	}
 
+	void lrotate()
+	{
+		_lrotate(this->m_root);
+	}
 
-private: // x
+private: 
 
-    void	 		_lrotate(node_pointer& root);
-    void 			_rrotate(node_pointer& root);
+    void	 		_lrotate(node_pointer root);
+    void 			_rrotate(node_pointer root);
 	node_pointer 	_get_uncle(node_pointer  root);
 	void			_restore(node_pointer& root);
 	void 			_recolor(node_pointer);
