@@ -11,6 +11,8 @@ namespace cocobolo
 	// template <typename T, typename node_type = Node<T>>
 	// class Tree;
 
+	enum class __color {RED, BLACK};
+
 	template <typename T>
 	struct Node
 	{
@@ -18,7 +20,6 @@ namespace cocobolo
 
 		// friend class Tree;
 		Node(const T&, Node* p = nullptr);
-		virtual 	~Node() = default;
 
 		Node& 		operator=(Node&& other);
 		const T& 	get_value() const noexcept;
@@ -32,6 +33,26 @@ namespace cocobolo
 		Node	*right{nullptr};
 		Node	*parent{nullptr};
 	};
+
+	template <typename T>
+	struct RBnode
+	{
+
+	public:
+
+    	__color m_color = __color::BLACK;
+
+    	RBnode(const T&,  RBnode* p = nullptr, __color color = __color::RED);
+
+	public:
+
+		T m_data = T{};
+
+		RBnode	*left	{nullptr};
+		RBnode	*right  {nullptr};
+		RBnode	*parent {nullptr};
+	};
+
 
 
 	template <typename T, typename node_type = Node<T>>
@@ -126,8 +147,10 @@ public:
 	using size_type          = 	std::size_t;
 	using pointer 			 = 	value_type *;
 	using const_pointer 	 = 	const value_type *;
-	using node_pointer 		 =  Node<T> *;
-	using const_node_pointer =	const  Node<T> *;
+	using node_type			 =	Node<T>;
+	using node_pointer 		 =  node_type *;
+	using const_node_pointer =	const  node_type *;
+
 
 public:
 

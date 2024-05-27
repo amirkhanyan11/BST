@@ -8,7 +8,7 @@ void BinarySearchTree<T>::_insert(const_reference value, node_pointer& root, nod
 {
 	if (root == nullptr)
 	{
-		root = new Node<T>{value, p};
+		root = new node_type{value, p};
 		return;
 	}
 

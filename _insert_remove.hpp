@@ -57,7 +57,7 @@ void Tree<T, node_type>::_clear(node_pointer root) noexcept
 
 	this->_clear(root->left);
 	this->_clear(root->right);
-	this->remove(root->m_data);
+	this->_remove(root);
 }
 
 template <typename T>
@@ -76,14 +76,19 @@ T& Node<T>::get_value() noexcept
 }
 
 template <typename T, typename node_type>
-void Tree<T, node_type>::_remove(Tree<T, node_type>::node_pointer root) noexcept
+void Tree<T, node_type>::_remove(node_type* root) noexcept
 {
+	if (root == m_root)
+	{
+		delete m_root;
+		m_root = nullptr;
+		return;
+	}
 
 	node_pointer tmp = nullptr;
 
     const size_type children = this->_childcount(root);
-    auto parent = root->parent;
-
+    node_pointer parent = root->parent;
 
 	switch (children)
 	{
