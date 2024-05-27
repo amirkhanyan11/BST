@@ -18,6 +18,7 @@ int main()
 
 	});
 
+
 	// tree.inorder([](const RBnode<int> *root){if (root->parent) cout << root->m_data << " : " << root->parent->m_data << endl;});
 	// tree.inorder([](const RBnode<int> *root){cout << root->m_data << endl;});
 
