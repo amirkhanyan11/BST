@@ -51,11 +51,12 @@ namespace cocobolo
 
 		virtual ~Tree();
 
-	private:
+	protected:
 
 
 		node_pointer m_root = nullptr;
 
+	private:
 
 		virtual void 				_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) = 0;
 		virtual void 				_remove(node_pointer) noexcept;
@@ -137,7 +138,7 @@ public:
 
 public:
 
-	void 				_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) override;
+	void 	_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) override;
 
 };
 

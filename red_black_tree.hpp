@@ -4,7 +4,7 @@ using namespace cocobolo;
 
 
 template <typename T>
-RedBlackTree<T>::RBnode::RBnode(const_reference val, __color color, RBnode* p) : Tree<value_type>::Node{val, p}
+RBnode<T>::RBnode(const T& val, __color color, RBnode* p) : Node<T>{val, p}
 {
     m_color = color;
 }
@@ -29,16 +29,16 @@ RedBlackTree<T>::RedBlackTree(std::initializer_list<value_type> lst)
 
 
 template <typename T>
-void RedBlackTree<T>::_lrotate(typename Tree<T>::Node*& root)
+void RedBlackTree<T>::_lrotate(node_pointer root)
 {
     if (root == nullptr || root->right == nullptr)
         return;
 
-    Tree<T>::Node* p = root->parent;
+	node_pointer p = root->parent;
 
-    Tree<T>::Node *newroot = root->right;
+	node_pointer newroot = root->right;
 
-    Tree<T>::Node *tmp = newroot->left;
+	node_pointer tmp = newroot->left;
 
     root->right = tmp;
 
@@ -46,5 +46,8 @@ void RedBlackTree<T>::_lrotate(typename Tree<T>::Node*& root)
 
     if (p != nullptr)
         p->right == root ? p->right = newroot : p->left = newroot;
+
+	else
+		m_root = newroot;
 
 }
