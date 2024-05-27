@@ -1,6 +1,6 @@
 #include "bstree.h"
 
-using namespace juju;
+using namespace cocobolo;
 
 
 template <typename T, typename node_type>

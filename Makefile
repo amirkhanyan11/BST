@@ -1,8 +1,8 @@
 NAME = bingchiling
 zibil = g++
 jiv = main.cpp
-aaa = -o 
+aaa = -o
 all:
-	$(zibil) -std=c++23 $(jiv) $(aaa) $(NAME)
-clean: 
+	$(zibil) -std=c++2a $(jiv) $(aaa) $(NAME)
+clean:
 	rm -rf $(NAME)

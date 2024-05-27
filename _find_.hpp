@@ -1,6 +1,6 @@
 #include "bstree.h"
 
-using namespace juju;
+using namespace cocobolo;
 
 template <typename T, typename node_type>
 typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::find_min() const noexcept

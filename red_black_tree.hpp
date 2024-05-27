@@ -1,6 +1,6 @@
 #include "red_black_tree.h"
 
-using namespace juju;
+using namespace cocobolo;
 
 
 template <typename T>
@@ -46,5 +46,5 @@ void RedBlackTree<T>::_lrotate(typename Tree<T>::Node*& root)
 
     if (p != nullptr)
         p->right == root ? p->right = newroot : p->left = newroot;
-    
+
 }

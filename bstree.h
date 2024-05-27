@@ -2,7 +2,7 @@
 #define __BSTREE__
 #include <iostream>
 
-namespace juju
+namespace cocobolo
 {
 
 	// template <typename T>
@@ -25,7 +25,7 @@ namespace juju
 		T& 			get_value() noexcept;
 
 	public:
-	
+
 		T m_data = T{};
 
 		Node	*left{nullptr};
@@ -51,7 +51,7 @@ namespace juju
 
 		virtual ~Tree();
 
-	public: // x
+	private:
 
 
 		node_pointer m_root = nullptr;
@@ -65,10 +65,10 @@ namespace juju
 
 		template <class func>
 		void 	_inorder(const_node_pointer, func f) const noexcept;
-		
+
 		template <class func>
 		void 	_preorder(const_node_pointer, func f) const noexcept;
-		
+
 		template <class func>
 		void 	_postorder(const_node_pointer, func f) const noexcept;
 
@@ -91,7 +91,7 @@ namespace juju
 
 		template <class func>
 		void 	postorder(func f) const noexcept;
-		
+
 		template <class func>
 		void 	preorder(func f) const noexcept;
 
@@ -99,7 +99,7 @@ namespace juju
 		void 					remove(const_reference value) noexcept;
 		node_pointer 			find(const_reference value) noexcept;
 		const_node_pointer 		find(const_reference value) const noexcept;
-		
+
 		node_pointer 			find_min() noexcept;
 		node_pointer 			find_max() noexcept;
 		const_node_pointer		find_min() const noexcept;
@@ -132,14 +132,12 @@ public:
 
 	BinarySearchTree() = default;
 	BinarySearchTree(std::initializer_list<T>);
-	
+
 	virtual ~BinarySearchTree() = default;
 
 public:
 
 	void 				_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) override;
-	void 				_remove(node_pointer) noexcept override;
-	const_node_pointer 	_find(const_reference value, node_pointer root) const noexcept override;
 
 };
 

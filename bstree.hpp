@@ -8,7 +8,7 @@
 #include "_helpers.hpp"
 
 #include "binary_search_tree.hpp"
-using namespace juju;
+using namespace cocobolo;
 
 
 template <typename T>

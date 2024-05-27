@@ -5,7 +5,7 @@
 
 enum class __color {RED, BLACK};
 
-namespace juju
+namespace cocobolo
 {
 
 template <typename T>
