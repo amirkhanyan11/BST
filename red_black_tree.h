@@ -36,13 +36,12 @@ public:
 
 private: // x
 
-    void	 _lrotate(node_pointer& root);
-    void 	_rrotate(node_pointer& root);
-	void 	_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) override;
+    void	 		_lrotate(node_pointer& root);
+    void 			_rrotate(node_pointer& root);
 	node_pointer 	_get_uncle(node_pointer  root);
-	void	_restore(node_pointer& root);
-
+	void			_restore(node_pointer& root);
 	void 			_recolor(node_pointer);
+	void 			_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) override;
 
     // void foo()
     // {

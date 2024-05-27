@@ -89,7 +89,7 @@ void RedBlackTree<T>::_rrotate(node_pointer& root)
 }
 
 template <typename T>
-typename RedBlackTree<T>::node_pointer 	_get_uncle(RBnode<T>* root)
+typename RedBlackTree<T>::node_pointer 	 RedBlackTree<T>::_get_uncle(typename RedBlackTree<T>::node_pointer root)
 {
 	auto p = root->parent;
 

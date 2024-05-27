@@ -9,14 +9,15 @@ using std::cout, std::endl, cocobolo::Node, cocobolo::RBnode, cocobolo::RedBlack
 
 int main()
 {
-	RedBlackTree<int> tree = {15};
+	RedBlackTree<int> tree = {15, 8, 17};
 
 	tree.postorder([](const RBnode<int> *root){
 
-			std::string col = (root->m_color == cocobolo::__color::RED) ? "RED" : "BLACK";
-			cout << root->m_data << " : " << col << endl;
+		std::string col = (root->m_color == cocobolo::__color::RED) ? "RED" : "BLACK";
+		cout << root->m_data << " : " << col << endl;
 
-		});
+	});
+
 	// tree.inorder([](const RBnode<int> *root){if (root->parent) cout << root->m_data << " : " << root->parent->m_data << endl;});
 	// tree.inorder([](const RBnode<int> *root){cout << root->m_data << endl;});
 
