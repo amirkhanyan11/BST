@@ -8,10 +8,8 @@ namespace cocobolo
 {
 
 
-
-
-template <typename T>
-class RedBlackTree : public Tree<T, RBnode<T>>
+template <typename T, typename Compare = std::less<T>>
+class RedBlackTree : public Tree<T, RBnode<T>, Compare>
 {
 
 public:
@@ -32,18 +30,7 @@ public:
     RedBlackTree(std::initializer_list<value_type>);
 	virtual ~RedBlackTree() = default;
 
-	//x
-	void rrotate(node_pointer node)
-	{
-		_rrotate(node);
-	}
-
-	void lrotate()
-	{
-		_lrotate(this->m_root);
-	}
-
-private: 
+private:
 
     void	 		_lrotate(node_pointer root);
     void 			_rrotate(node_pointer root);
@@ -51,18 +38,6 @@ private:
 	void			_restore(node_pointer& root);
 	void 			_recolor(node_pointer);
 	void 			_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) override;
-
-    // void foo()
-    // {
-    //     this->_lrotate(this->m_root);
-    // }
-
-public:
-
-
-    // void insert(const_reference) override;
-    // void remove(const_reference) override noexcept;
-
 
 };
 

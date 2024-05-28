@@ -2,9 +2,8 @@
 
 using namespace cocobolo;
 
-
-template <typename T>
-void BinarySearchTree<T>::_insert(const_reference value, node_pointer& root, node_pointer p)
+template <typename T, typename Compare>
+void BinarySearchTree<T, Compare>::_insert(const_reference value, node_pointer& root, node_pointer p)
 {
 	if (root == nullptr)
 	{
@@ -12,11 +11,20 @@ void BinarySearchTree<T>::_insert(const_reference value, node_pointer& root, nod
 		return;
 	}
 
-	else if (root->m_data < value)
+	else if (this->comp(root->m_data, value))
 		this->_insert(value, root->right, root);
 
-	else if (root->m_data > value)
+	else if (this->comp(value, root->m_data))
 		this->_insert(value, root->left, root);
+}
+
+template <typename T, typename Compare>
+BinarySearchTree<T, Compare>::BinarySearchTree(std::initializer_list<T> list)
+{
+	for (auto i : list)
+	{
+		this->insert(i);
+	}
 }
 
 // template <typename T>

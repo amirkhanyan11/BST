@@ -14,8 +14,8 @@ RBnode<T>::RBnode(const T& val, RBnode* p, __color color)
 
 
 
-template <typename T>
-RedBlackTree<T>::RedBlackTree(std::initializer_list<value_type> lst)
+template <typename T, typename Compare>
+RedBlackTree<T, Compare>::RedBlackTree(std::initializer_list<value_type> lst)
 {
     for (auto i : lst)
     {
@@ -24,15 +24,15 @@ RedBlackTree<T>::RedBlackTree(std::initializer_list<value_type> lst)
 }
 
 
-// template <typename T>
-// void RedBlackTree<T>::insert(const_reference val)
+// template <typename T, typename Compare>
+// void RedBlackTree<T, Compare>::insert(const_reference val)
 // {
 
 // }
 
 
-template <typename T>
-void RedBlackTree<T>::_lrotate(node_pointer root)
+template <typename T, typename Compare>
+void RedBlackTree<T, Compare>::_lrotate(node_pointer root)
 {
     if (root == nullptr || root->right == nullptr)
         return;
@@ -61,8 +61,8 @@ void RedBlackTree<T>::_lrotate(node_pointer root)
 }
 
 
-template <typename T>
-void RedBlackTree<T>::_rrotate(node_pointer root)
+template <typename T, typename Compare>
+void RedBlackTree<T, Compare>::_rrotate(node_pointer root)
 {
     if (root == nullptr || root->left == nullptr)
         return;
@@ -78,7 +78,7 @@ void RedBlackTree<T>::_rrotate(node_pointer root)
 
     newroot->right = root;
 
-		
+
 	newroot->parent = p;
 
 	// if (root->m_data == 15)
@@ -93,8 +93,8 @@ void RedBlackTree<T>::_rrotate(node_pointer root)
 
 }
 
-template <typename T>
-typename RedBlackTree<T>::node_pointer 	 RedBlackTree<T>::_get_uncle(typename RedBlackTree<T>::node_pointer root)
+template <typename T, typename Compare>
+typename RedBlackTree<T, Compare>::node_pointer 	 RedBlackTree<T, Compare>::_get_uncle(typename RedBlackTree<T, Compare>::node_pointer root)
 {
 	auto p = root->parent;
 
@@ -107,8 +107,8 @@ typename RedBlackTree<T>::node_pointer 	 RedBlackTree<T>::_get_uncle(typename Re
 	return (gp->left == p) ? gp->right : gp->left;
 }
 
-template <typename T>
-void RedBlackTree<T>::_insert(const_reference value, node_pointer& root, node_pointer p)
+template <typename T, typename Compare>
+void RedBlackTree<T, Compare>::_insert(const_reference value, node_pointer& root, node_pointer p)
 {
 	if (root == nullptr)
 	{
@@ -117,21 +117,21 @@ void RedBlackTree<T>::_insert(const_reference value, node_pointer& root, node_po
 		return;
 	}
 
-	else if (root->m_data < value)
+	else if (this->comp(root->m_data, value))
 		this->_insert(value, root->right, root);
 
-	else if (root->m_data > value)
+	else if (this->comp(value, root->m_data))
 		this->_insert(value, root->left, root);
 }
 
-template <typename T>
-void RedBlackTree<T>::_recolor(node_pointer root)
+template <typename T, typename Compare>
+void RedBlackTree<T, Compare>::_recolor(node_pointer root)
 {
 	root->m_color = (root->m_color == __color::RED) ? __color::BLACK : __color::RED;
 }
 
-template <typename T>
-void RedBlackTree<T>::_restore(node_pointer& root)
+template <typename T, typename Compare>
+void RedBlackTree<T, Compare>::_restore(node_pointer& root)
 {
 	if (root == this->m_root)
 	{
@@ -150,7 +150,7 @@ void RedBlackTree<T>::_restore(node_pointer& root)
 	// 			std::cout << root->m_data << " : " << col  << " : Parent -> X" << std::endl;
 	// 		else
 	// 			std::cout << root->m_data << " : " << col  << " : Parent -> " << root->parent->m_data << std::endl;
-				
+
 	// 	});
 	// 	std::cout << std::endl;
 	// 	std::cout << this->size() << std::endl;
@@ -200,7 +200,7 @@ void RedBlackTree<T>::_restore(node_pointer& root)
 			{
 				_recolor(root->parent);
 				_recolor(root->parent->parent);
-				
+
 				_lrotate(root->parent->parent);
 			}
 

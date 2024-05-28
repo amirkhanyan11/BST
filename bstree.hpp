@@ -11,14 +11,6 @@
 using namespace cocobolo;
 
 
-template <typename T>
-BinarySearchTree<T>::BinarySearchTree(std::initializer_list<T> list)
-{
-	for (auto i : list)
-	{
-		this->insert(i);
-	}
-}
 
 template <typename T>
 Node<T>& Node<T>::operator=(Node<T>&& other)
@@ -35,8 +27,8 @@ Node<T>::Node(const T& value, Node<T> *p) : m_data{value}, parent{p} {}
 
 
 
-template <typename T, typename node_type>
-Tree<T, node_type>::~Tree()
+template <typename T, typename node_type, typename Compare>
+Tree<T, node_type, Compare>::~Tree()
 {
 	_clear(m_root);
 	this->m_root = nullptr;

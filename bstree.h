@@ -55,7 +55,7 @@ namespace cocobolo
 
 
 
-	template <typename T, typename node_type = Node<T>>
+	template <typename T, typename node_type = Node<T>, typename Compare = std::less<T>>
 	class Tree                                          // abstract
 	{
 
@@ -70,12 +70,14 @@ namespace cocobolo
 		using node_pointer 		 =  node_type *;
 		using const_node_pointer =	const  node_type *;
 
+
 		virtual ~Tree();
 
 	protected:
 
 
 		node_pointer m_root = nullptr;
+		Compare 	 comp 	= Compare{};
 
 	private:
 
@@ -135,8 +137,8 @@ namespace cocobolo
 
 
 
-template <typename T>
-class BinarySearchTree : public Tree<T, Node<T>>
+template <typename T, typename Compare = std::less<T>>
+class BinarySearchTree : public Tree<T, Node<T>, Compare>
 {
 
 public:

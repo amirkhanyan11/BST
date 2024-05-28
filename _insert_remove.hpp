@@ -2,14 +2,14 @@
 
 using namespace cocobolo;
 
-template <typename T, typename node_type>
-void Tree<T, node_type>::insert(const_reference value)
+template <typename T, typename node_type, typename Compare>
+void Tree<T, node_type, Compare>::insert(const_reference value)
 {
 	this->_insert(value, this->m_root);
 }
 
-template <typename T, typename node_type>
-typename Tree<T, node_type>::size_type Tree<T, node_type>::_childcount(node_pointer root) const noexcept
+template <typename T, typename node_type, typename Compare>
+typename Tree<T, node_type, Compare>::size_type Tree<T, node_type, Compare>::_childcount(node_pointer root) const noexcept
 {
 
 	if (root->left == nullptr && root->right == nullptr)
@@ -26,8 +26,8 @@ typename Tree<T, node_type>::size_type Tree<T, node_type>::_childcount(node_poin
 }
 
 
-template <typename T, typename node_type>
-void Tree<T, node_type>::remove(const_reference value) noexcept
+template <typename T, typename node_type, typename Compare>
+void Tree<T, node_type, Compare>::remove(const_reference value) noexcept
 {
 	if (m_root->m_data == value)
 	{
@@ -47,8 +47,8 @@ void Tree<T, node_type>::remove(const_reference value) noexcept
 }
 
 
-template <typename T, typename node_type>
-void Tree<T, node_type>::_clear(node_pointer root) noexcept
+template <typename T, typename node_type, typename Compare>
+void Tree<T, node_type, Compare>::_clear(node_pointer root) noexcept
 {
 	if (root == nullptr)
 	{
@@ -75,8 +75,8 @@ T& Node<T>::get_value() noexcept
 	);
 }
 
-template <typename T, typename node_type>
-void Tree<T, node_type>::_remove(node_type* root) noexcept
+template <typename T, typename node_type, typename Compare>
+void Tree<T, node_type, Compare>::_remove(node_type* root) noexcept
 {
 	if (root == m_root)
 	{
@@ -120,26 +120,26 @@ void Tree<T, node_type>::_remove(node_type* root) noexcept
 }
 
 
-template <typename T, typename node_type>
-typename Tree<T, node_type>::const_node_pointer Tree<T, node_type>::_find(Tree<T, node_type>::const_reference value, Tree<T, node_type>::node_pointer root) const noexcept
+template <typename T, typename node_type, typename Compare>
+typename Tree<T, node_type, Compare>::const_node_pointer Tree<T, node_type, Compare>::_find(Tree<T, node_type, Compare>::const_reference value, Tree<T, node_type, Compare>::node_pointer root) const noexcept
 {
 	if (root == nullptr)
 	{
 		return nullptr;
 	}
 
-	if (root->m_data == value)
-	{
-		return root;
-	}
+	if (this->comp(value, root->m_data))
+    {
+		return this->_find(value, root->left);
+    }
 
-	else if (root->m_data < value)
+	else if (this->comp(root->m_data, value))
 	{
 		return this->_find(value, root->right);
 	}
 
 	else
-    {
-		return this->_find(value, root->left);
-    }
+	{
+		return root;
+	}
 }

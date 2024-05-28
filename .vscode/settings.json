@@ -54,6 +54,10 @@
 		"new": "cpp",
 		"sstream": "cpp",
 		"stdexcept": "cpp",
-		"typeinfo": "cpp"
+		"typeinfo": "cpp",
+		"__node_handle": "cpp",
+		"chrono": "cpp",
+		"__memory": "cpp",
+		"ratio": "cpp"
 	}
 }
