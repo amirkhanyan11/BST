@@ -3,6 +3,7 @@
 #include "red_black_tree.h"
 
 using std::cout,
+	  std::cin,
 	  std::endl,
 	  cocobolo::Node,
 	  cocobolo::RBnode,
@@ -14,24 +15,39 @@ using std::cout,
 
 int main()
 {
-	RedBlackTree<int> tree = {8, 5, 15, 12, 19, 23, 9, 13, 10};
+	RedBlackTree<int> tree = {1, 2, 3, 4, 5};
 
-	// tree.rrotate( tree.find(15) );
+	tree.remove(2);
 
-	tree.preorder([](const RBnode<int> *root){
+	// int x = 0;
 
-		std::string col = (root->m_color == cocobolo::__color::RED) ? "RED" : "BLACK";
+	// cin >> x;
 
-		if (root->parent == nullptr)
-				std::cout << root->m_data << " : " << col  << " : Root" << std::endl;
-		else
-			std::cout << root->m_data << " : " << col  << " : Parent -> " << root->parent->m_data << std::endl;
-
-	});
+	// RedBlackTree<int> tree;
 
 
-	// tree.inorder([](const RBnode<int> *root){if (root->parent) cout << root->m_data << " : " << root->parent->m_data << endl;});
-	// tree.inorder([](const RBnode<int> *root){cout << root->m_data << endl;});
+	// while (x != 666)
+	// {
+	// 	tree.insert(x);
 
-	// std::cout << tree.successor(135)->get_value() << std::endl;
+		tree.preorder([](const RBnode<int> *root){
+
+			std::string col = (root->m_color == cocobolo::__color::RED) ? "RED" : "BLACK";
+
+			std::string childof;
+			if (root->parent == nullptr) childof = " Root";
+
+			else if (root->parent->left == root) childof = "Left child of ";
+
+			else if (root->parent->right == root) childof = "Right child of ";
+
+			if (root->parent == nullptr)
+					std::cout << root->m_data << " : " << col <<  " : " << childof << std::endl;
+			else
+				std::cout << root->m_data << " : " << col << " : " << childof << root->parent->m_data << std::endl;
+
+		});
+	// 	cin >> x;
+	// }
+
 }

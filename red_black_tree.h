@@ -35,12 +35,15 @@ private:
     void	 		_lrotate(node_pointer root);
     void 			_rrotate(node_pointer root);
 	node_pointer 	_get_uncle(node_pointer  root);
+	node_pointer 	_get_sibling(node_pointer  root);
 	void			_restore(node_pointer& root);
 	void 			_recolor(node_pointer);
 	void 			_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) override;
 
+	void 			_remove(node_pointer root) noexcept override;
+	void 			_transplant(node_pointer u, node_pointer v);
+	void 			_remove_fixup(node_pointer x);
 };
-
 
 
 #include "red_black_tree.hpp"

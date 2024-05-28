@@ -29,12 +29,6 @@ typename Tree<T, node_type, Compare>::size_type Tree<T, node_type, Compare>::_ch
 template <typename T, typename node_type, typename Compare>
 void Tree<T, node_type, Compare>::remove(const_reference value) noexcept
 {
-	if (m_root->m_data == value)
-	{
-		delete m_root;
-		return;
-	}
-
 	node_pointer root = this->find(value);
 
 	if (root == nullptr)

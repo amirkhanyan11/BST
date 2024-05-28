@@ -96,6 +96,8 @@ namespace cocobolo
 		template <class func>
 		void 	_postorder(const_node_pointer, func f) const noexcept;
 
+	protected:
+
 		const_node_pointer	_find_min(const_node_pointer) const noexcept;
 		const_node_pointer  _find_max(const_node_pointer) const noexcept;
 		node_pointer 		_predecessor(node_pointer) noexcept;
@@ -103,8 +105,6 @@ namespace cocobolo
 		void 				_clear(node_pointer) noexcept;
 		size_type 			_size(const_node_pointer) const noexcept;
 		size_type 			_height(const_node_pointer) const noexcept;
-
-	protected:
 
 		size_type 			_childcount(node_pointer) const noexcept;
 

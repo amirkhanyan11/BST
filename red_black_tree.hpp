@@ -108,6 +108,16 @@ typename RedBlackTree<T, Compare>::node_pointer 	 RedBlackTree<T, Compare>::_get
 }
 
 template <typename T, typename Compare>
+typename RedBlackTree<T, Compare>::node_pointer 	 RedBlackTree<T, Compare>::_get_sibling(typename RedBlackTree<T, Compare>::node_pointer root)
+{
+	auto p = root->parent;
+
+	if (p == nullptr) return nullptr;
+
+	return (p->left == root) ? p->right : p->left;
+}
+
+template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::_insert(const_reference value, node_pointer& root, node_pointer p)
 {
 	if (root == nullptr)
@@ -138,24 +148,6 @@ void RedBlackTree<T, Compare>::_restore(node_pointer& root)
 		root->m_color = __color::BLACK;
 		return;
 	}
-
-	// if (root->m_data == 15)
-	// 		std::cout << root->parent->m_data << std::endl;
-
-	// if (root->m_data == 15)
-	// {
-	// 	this->preorder([](const RBnode<int> *root){
-	// 		std::string col = (root->m_color == cocobolo::__color::RED) ? "RED" : "BLACK";
-	// 		if (root->parent == nullptr)
-	// 			std::cout << root->m_data << " : " << col  << " : Parent -> X" << std::endl;
-	// 		else
-	// 			std::cout << root->m_data << " : " << col  << " : Parent -> " << root->parent->m_data << std::endl;
-
-	// 	});
-	// 	std::cout << std::endl;
-	// 	std::cout << this->size() << std::endl;
-	// 	// return ;
-	// }
 
 	if (root->parent->m_color == __color::BLACK)
 		return;
@@ -213,6 +205,132 @@ void RedBlackTree<T, Compare>::_restore(node_pointer& root)
 			}
 		}
 	}
+}
 
 
+
+template <typename T, typename Compare>
+void  RedBlackTree<T, Compare>::_transplant(node_pointer u, node_pointer v)
+{
+	if (u == nullptr) return;
+
+	if (u == this->m_root)
+	{
+		this->m_root = v;
+	}
+	else if (u == u->parent->left)
+	{
+		u->parent->left = v;
+	}
+	else if (u == u->parent->right)
+	{
+		u->parent->right = v;
+	}
+
+	if (v != nullptr) v->parent = u->parent;
+}
+
+
+
+template <typename T, typename Compare>
+void  RedBlackTree<T, Compare>::_remove(node_pointer z) noexcept
+{
+
+	if (z == nullptr) return;
+
+	if (z->left == nullptr)
+	{
+		_transplant(z, z->right);
+		if (z->m_color == cocobolo::__color::BLACK)
+		{
+			_remove_fixup(z->right);
+		}
+	}
+
+	if (z->right == nullptr)
+	{
+		_transplant(z, z->left);
+		if (z->m_color == cocobolo::__color::BLACK)
+		{
+			_remove_fixup(z->left);
+		}
+	}
+
+	if (z->left != nullptr && z->right != nullptr) // neither is NIL
+	{
+		node_pointer x = this->_successor(z);
+		cocobolo::__color color = x->m_color;
+
+		// std::cout << x->m_data << std::endl;
+
+		if (x != z->right)
+		{
+			_transplant(x, x->right);
+
+			x->right = z->right;
+			x->left = z->left;
+			_transplant(z, x);
+		}
+		// if (z->m_color == cocobolo::__color::BLACK)
+		// {
+		// 	// idk
+		// }
+	}
+
+
+	delete z;
+
+}
+
+template <typename T, typename Compare>
+void	RedBlackTree<T, Compare>::_remove_fixup(node_pointer x)
+{
+	while (x != this->m_root && x->m_color == __color::BLACK)
+	{
+		node_pointer w = _get_sibling(x);
+
+		cocobolo::__color color = w->m_color;
+
+		switch (color)
+		{
+			case __color::RED:
+			{
+				w->m_color = __color::BLACK;
+				x->parent->m_color = __color::RED;
+				this->_lrotate(x->parent);
+				w = this->_get_sibling(x); // rec
+				break;
+			}
+
+			case __color::BLACK:
+			{
+				cocobolo::__color left_color = (w->left == nullptr) ? __color::BLACK : w->left->m_color;
+				cocobolo::__color right_color = (w->right == nullptr) ? __color::BLACK : w->right->m_color;
+
+				if (left_color == __color::BLACK && right_color == __color::BLACK)
+				{
+					w->m_color = __color::RED;
+					x = x->parent; // rec
+				}
+
+				else if (left_color == __color::RED && right_color == __color::BLACK)
+				{
+					w->left->m_color = __color::BLACK;
+					w->m_color = __color::RED;
+					this->_rrotate(w);
+					w = this->_get_sibling(x);
+				}
+
+				else if (right_color == __color::RED)
+				{
+					w->m_color = x->parent->m_color;
+					x->parent->m_color = __color::BLACK;
+					w->right->m_color = __color::BLACK;
+					this->_lrotate(x->parent);
+					x = this->m_root;
+				}
+			}
+		}
+		x->m_color = __color::BLACK;
+	}
 }

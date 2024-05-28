@@ -58,6 +58,16 @@
 		"__node_handle": "cpp",
 		"chrono": "cpp",
 		"__memory": "cpp",
-		"ratio": "cpp"
+		"ratio": "cpp",
+		"__mutex_base": "cpp",
+		"__string": "cpp",
+		"__threading_support": "cpp",
+		"__tuple": "cpp",
+		"__config": "cpp",
+		"__errc": "cpp",
+		"__split_buffer": "cpp",
+		"complex": "cpp",
+		"cstring": "cpp",
+		"ctime": "cpp"
 	}
 }
