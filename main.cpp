@@ -2,23 +2,28 @@
 #include "bstree.h"
 #include "red_black_tree.h"
 
-using std::cout, std::endl, cocobolo::Node, cocobolo::RBnode, cocobolo::RedBlackTree, cocobolo::BinarySearchTree;
+using std::cout,
+	  std::endl,
+	  cocobolo::Node,
+	  cocobolo::RBnode,
+	  cocobolo::RedBlackTree,
+	  cocobolo::BinarySearchTree;
 
 // cocobolo::Tree<int> tree = {300, 200, 100, 120, 140, 130, 135, 132, 133};
 //cocobolo::Tree<int> tree = {64, 20, 40, 15, 17, 16, 35, 37, 50, 100, 101, 67, 66, 70};
 
 int main()
 {
-	RedBlackTree<int, std::greater<int>> tree = {8, 5, 15, 12, 19, 23, 9, 13, 10};
+	RedBlackTree<int> tree = {8, 5, 15, 12, 19, 23, 9, 13, 10};
 
 	// tree.rrotate( tree.find(15) );
 
-	tree.postorder([](const RBnode<int> *root){
+	tree.preorder([](const RBnode<int> *root){
 
 		std::string col = (root->m_color == cocobolo::__color::RED) ? "RED" : "BLACK";
 
 		if (root->parent == nullptr)
-				std::cout << root->m_data << " : " << col  << " : Parent -> X" << std::endl;
+				std::cout << root->m_data << " : " << col  << " : Root" << std::endl;
 		else
 			std::cout << root->m_data << " : " << col  << " : Parent -> " << root->parent->m_data << std::endl;
 

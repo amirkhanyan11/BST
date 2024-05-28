@@ -138,7 +138,7 @@ namespace cocobolo
 
 
 template <typename T, typename Compare = std::less<T>>
-class BinarySearchTree : public Tree<T, Node<T>, Compare>
+class BinarySearchTree final : public Tree<T, Node<T>, Compare>
 {
 
 public:

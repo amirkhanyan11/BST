@@ -9,7 +9,7 @@ namespace cocobolo
 
 
 template <typename T, typename Compare = std::less<T>>
-class RedBlackTree : public Tree<T, RBnode<T>, Compare>
+class RedBlackTree final : public Tree<T, RBnode<T>, Compare>
 {
 
 public:
