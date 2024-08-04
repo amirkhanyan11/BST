@@ -31,7 +31,7 @@ namespace cocobolo
 
 		Node	*left{nullptr};
 		Node	*right{nullptr};
-		Node	*parent{nullptr};
+		Node	*p{nullptr};
 	};
 
 
@@ -49,7 +49,7 @@ namespace cocobolo
 		T val = T{};
 		RBnode	*left	{nullptr};
 		RBnode	*right  {nullptr};
-		RBnode	*parent {nullptr};
+		RBnode	*p {nullptr};
 	};
 
 

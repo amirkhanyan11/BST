@@ -83,14 +83,14 @@ void Tree<T, node_type, Compare>::_remove(node_type* root) noexcept
 	node_pointer tmp = nullptr;
 
     const size_type children = this->_childcount(root);
-    node_pointer parent = root->parent;
+    node_pointer p = root->p;
 
 	switch (children)
 	{
 		case 1:
 		{
 			tmp = (root->left == nullptr) ? root->right : root->left;
-			(parent->left == root) ? parent->left = tmp : parent->right = tmp;
+			(p->left == root) ? p->left = tmp : p->right = tmp;
 			delete root;
 			break;
 		}
@@ -110,7 +110,7 @@ void Tree<T, node_type, Compare>::_remove(node_type* root) noexcept
 
 		case 0:
 			delete root;
-			(parent->left == root) ? parent->left = nullptr : parent->right = nullptr;
+			(p->left == root) ? p->left = nullptr : p->right = nullptr;
 	}
 }
 

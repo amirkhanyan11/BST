@@ -32,7 +32,7 @@ void RedBlackTree<T, Compare>::__insert(node_pointer z)
         else return;
     }
 
-    z->parent = y;
+    z->p = y;
 
     if (y == NIL) this->m_root = z;
 
@@ -46,54 +46,54 @@ void RedBlackTree<T, Compare>::__insert(node_pointer z)
 template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::_insert_fixup(node_pointer z)
 {
-    while (z->parent->m_color == __color::RED)
+    while (z->p->m_color == __color::RED)
     {
-        if (z->parent == z->parent->parent->left)
+        if (z->p == z->p->p->left)
         {
-            node_pointer y = z->parent->parent->right;
+            node_pointer y = z->p->p->right;
 
             if (y->m_color == __color::RED)
             {
                 y->m_color = __color::BLACK;
-                z->parent->m_color = __color::BLACK;
-                z->parent->parent->m_color = __color::RED;
-                z = z->parent->parent;
+                z->p->m_color = __color::BLACK;
+                z->p->p->m_color = __color::RED;
+                z = z->p->p;
             }
             else
             {
-                if (z == z->parent->right)
+                if (z == z->p->right)
                 {
-                    z = z->parent;
+                    z = z->p;
                     _lrotate(z);
                 }
 
-                z->parent->m_color = __color::BLACK;
-                z->parent->parent->m_color = __color::RED;
-                _rrotate(z->parent->parent);
+                z->p->m_color = __color::BLACK;
+                z->p->p->m_color = __color::RED;
+                _rrotate(z->p->p);
             }
         }
         else
         {
-            node_pointer y = z->parent->parent->left;
+            node_pointer y = z->p->p->left;
 
             if (y->m_color == __color::RED)
             {
                 y->m_color = __color::BLACK;
-                z->parent->m_color = __color::BLACK;
-                z->parent->parent->m_color = __color::RED;
-                z = z->parent->parent;
+                z->p->m_color = __color::BLACK;
+                z->p->p->m_color = __color::RED;
+                z = z->p->p;
             }
             else
             {
-                if (z == z->parent->left)
+                if (z == z->p->left)
                 {
-                    z = z->parent;
+                    z = z->p;
                     _rrotate(z);
                 }
 
-                z->parent->m_color = __color::BLACK;
-                z->parent->parent->m_color = __color::RED;
-                _lrotate(z->parent->parent);
+                z->p->m_color = __color::BLACK;
+                z->p->p->m_color = __color::RED;
+                _lrotate(z->p->p);
             }
         }
     }

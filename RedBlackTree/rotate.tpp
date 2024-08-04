@@ -20,19 +20,19 @@ void RedBlackTree<T, Compare>::_lrotate(node_pointer x)
 
     x->right = y->left;
 
-    if (y->left != NIL) y->left->parent = x;
+    if (y->left != NIL) y->left->p = x;
 
-    y->parent = x->parent;
+    y->p = x->p;
 
-    if (x->parent == NIL) this->m_root = y;
+    if (x->p == NIL) this->m_root = y;
 
-    else if (x == x->parent->left) x->parent->left = y;
+    else if (x == x->p->left) x->p->left = y;
 
-    else x->parent->right = y;
+    else x->p->right = y;
 
     y->left = x;
 
-    x->parent = y;
+    x->p = y;
 }
 
 template <typename T, typename Compare>
@@ -45,19 +45,19 @@ void RedBlackTree<T, Compare>::_rrotate(node_pointer x)
 
     x->left = y->right;
 
-    if (y->right != NIL) y->right->parent = x;
+    if (y->right != NIL) y->right->p = x;
 
-    y->parent = x->parent;
+    y->p = x->p;
 
-    if (x->parent == NIL) this->m_root = y;
+    if (x->p == NIL) this->m_root = y;
 
-    else if (x == x->parent->left) x->parent->left = y;
+    else if (x == x->p->left) x->p->left = y;
 
-    else x->parent->right = y;
+    else x->p->right = y;
 
     y->right = x;
 
-    x->parent = y;
+    x->p = y;
 }
 
 

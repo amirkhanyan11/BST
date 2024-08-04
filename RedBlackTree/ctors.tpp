@@ -12,7 +12,7 @@ template <typename T>
 RBnode<T>::RBnode(const T& val, RBnode* NIL, __color color)
 
 	:  	val{val},
-		parent{NIL},
+		p{NIL},
 		left{NIL},
 		right{NIL},
     	m_color{color} {}

@@ -20,24 +20,24 @@ void RedBlackTree<T, Compare>::_lrotate(node_pointer root)
     if (!root || !root->right)
         return;
 
-	node_pointer p = root->parent;
+	node_pointer p = root->p;
 
 	node_pointer newroot = root->right;
 
     root->right = newroot->left;
 
 	if (newroot->left != nullptr)
-    	newroot->left->parent = root;
+    	newroot->left->p = root;
 
     newroot->left = root;
 
-	newroot->parent = p;
+	newroot->p = p;
 
-	root->parent = newroot;
+	root->p = newroot;
 
     if (p != nullptr)
         p->right == root ? p->right = newroot : p->left = newroot;
-    
+
 	else
 		this->m_root = newroot;
 
@@ -50,22 +50,22 @@ void RedBlackTree<T, Compare>::_rrotate(node_pointer root)
     if (root == nullptr || root->left == nullptr)
         return;
 
-	node_pointer p = root->parent;
+	node_pointer p = root->p;
 
 	node_pointer newroot = root->left;
 
     root->left = newroot->right;
 
 	if (newroot->right != nullptr)
-    	newroot->right->parent = root;
+    	newroot->right->p = root;
 
     newroot->right = root;
 
 
-	newroot->parent = p;
+	newroot->p = p;
 
 	// if (root->val == 15)
-	root->parent = newroot;
+	root->p = newroot;
 
 
     if (p != nullptr)
@@ -79,11 +79,11 @@ void RedBlackTree<T, Compare>::_rrotate(node_pointer root)
 template <typename T, typename Compare>
 typename RedBlackTree<T, Compare>::node_pointer 	 RedBlackTree<T, Compare>::_get_uncle(typename RedBlackTree<T, Compare>::node_pointer root)
 {
-	auto p = root->parent;
+	auto p = root->p;
 
 	if (p == nullptr) return nullptr;
 
-	auto gp = p->parent;
+	auto gp = p->p;
 
 	if (gp == nullptr) return nullptr;
 
@@ -93,7 +93,7 @@ typename RedBlackTree<T, Compare>::node_pointer 	 RedBlackTree<T, Compare>::_get
 template <typename T, typename Compare>
 typename RedBlackTree<T, Compare>::node_pointer 	 RedBlackTree<T, Compare>::_get_sibling(typename RedBlackTree<T, Compare>::node_pointer root)
 {
-	auto p = root->parent;
+	auto p = root->p;
 
 	if (p == nullptr) return nullptr;
 
@@ -132,13 +132,13 @@ void RedBlackTree<T, Compare>::_restore(node_pointer& root)
 		return;
 	}
 
-	if (root->parent->m_color == __color::BLACK)
+	if (root->p->m_color == __color::BLACK)
 		return;
 
 	node_pointer uncle = this->_get_uncle(root);
 
 
-	if (uncle == nullptr && (root->parent == nullptr || root->parent->parent == nullptr)) return; // ??
+	if (uncle == nullptr && (root->p == nullptr || root->p->p == nullptr)) return; // ??
 
 	__color uncle_color = (uncle == nullptr) ? __color::BLACK : uncle->m_color;
 
@@ -146,45 +146,45 @@ void RedBlackTree<T, Compare>::_restore(node_pointer& root)
 	{
 		case __color::RED:
 		{
-			_recolor (root->parent);
-			_recolor (root->parent->parent);
+			_recolor (root->p);
+			_recolor (root->p->p);
 			_recolor (uncle);
 
-			_restore(root->parent->parent); // idk
+			_restore(root->p->p); // idk
 
 			break ;
 		}
 		case __color::BLACK:
 		{
 			// triangle
-			if (root->parent->left == root && root->parent->parent->right == root->parent)
+			if (root->p->left == root && root->p->p->right == root->p)
 			{
-				_rrotate(root->parent);
+				_rrotate(root->p);
 				// if (root->val == 12)
-				// 	std::cout << root->parent->val << std::endl;
+				// 	std::cout << root->p->val << std::endl;
 				_restore(root->right);
 			}
-			else if (root->parent->right == root && root->parent->parent->left == root->parent)
+			else if (root->p->right == root && root->p->p->left == root->p)
 			{
-				_lrotate(root->parent);
+				_lrotate(root->p);
 				_restore(root->left);
 			}
 
 			// line
-			else if (root->parent->right == root && root->parent->parent->right == root->parent)
+			else if (root->p->right == root && root->p->p->right == root->p)
 			{
-				_recolor(root->parent);
-				_recolor(root->parent->parent);
+				_recolor(root->p);
+				_recolor(root->p->p);
 
-				_lrotate(root->parent->parent);
+				_lrotate(root->p->p);
 			}
 
-			else if (root->parent->left == root && root->parent->parent->left == root->parent)
+			else if (root->p->left == root && root->p->p->left == root->p)
 			{
-				_recolor(root->parent);
-				_recolor(root->parent->parent);
+				_recolor(root->p);
+				_recolor(root->p->p);
 
-				_rrotate(root->parent->parent);
+				_rrotate(root->p->p);
 			}
 		}
 	}
@@ -201,16 +201,16 @@ void  RedBlackTree<T, Compare>::_transplant(node_pointer u, node_pointer v)
 	{
 		this->m_root = v;
 	}
-	else if (u == u->parent->left)
+	else if (u == u->p->left)
 	{
-		u->parent->left = v;
+		u->p->left = v;
 	}
-	else if (u == u->parent->right)
+	else if (u == u->p->right)
 	{
-		u->parent->right = v;
+		u->p->right = v;
 	}
 
-	if (v != nullptr) v->parent = u->parent;
+	if (v != nullptr) v->p = u->p;
 }
 
 
@@ -279,8 +279,8 @@ void	RedBlackTree<T, Compare>::_remove_fixup(node_pointer x)
 			case __color::RED:
 			{
 				w->m_color = __color::BLACK;
-				x->parent->m_color = __color::RED;
-				this->_lrotate(x->parent);
+				x->p->m_color = __color::RED;
+				this->_lrotate(x->p);
 				w = this->_get_sibling(x); // rec
 				break;
 			}
@@ -293,7 +293,7 @@ void	RedBlackTree<T, Compare>::_remove_fixup(node_pointer x)
 				if (left_color == __color::BLACK && right_color == __color::BLACK)
 				{
 					w->m_color = __color::RED;
-					x = x->parent; // rec
+					x = x->p; // rec
 				}
 
 				else if (left_color == __color::RED && right_color == __color::BLACK)
@@ -306,10 +306,10 @@ void	RedBlackTree<T, Compare>::_remove_fixup(node_pointer x)
 
 				else if (right_color == __color::RED)
 				{
-					w->m_color = x->parent->m_color;
-					x->parent->m_color = __color::BLACK;
+					w->m_color = x->p->m_color;
+					x->p->m_color = __color::BLACK;
 					w->right->m_color = __color::BLACK;
-					this->_lrotate(x->parent);
+					this->_lrotate(x->p);
 					x = this->m_root;
 				}
 			}

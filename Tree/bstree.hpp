@@ -23,7 +23,7 @@ Node<T>& Node<T>::operator=(Node<T>&& other)
 
 
 template <typename T>
-Node<T>::Node(const T& value, Node<T> *p) : val{value}, parent{p} {}
+Node<T>::Node(const T& value, Node<T> *p) : val{value}, p{p} {}
 
 
 
