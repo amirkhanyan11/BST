@@ -85,7 +85,18 @@ void RedBlackTree<T, Compare>::_delete(node_pointer z)
 // {
 // 	while (x != this->root and x->color == __color::BLACK)
 // 	{
+// 		node_pointer w = NIL;
 // 		if (x == x->p->left)
+// 		{
+// 			w = x->p->right;
+// 			if (w->color == __color::RED) // case 1
+// 			{
+// 				w->color = __color::BLACK;
+// 				x->p->color = __color::RED;
+// 				_lrotate(x->p);
+// 				w = x->p->right;
+// 			}
+// 		}
 // 	}
 // }
 
