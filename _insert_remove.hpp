@@ -5,7 +5,8 @@ using namespace cocobolo;
 template <typename T, typename node_type, typename Compare>
 void Tree<T, node_type, Compare>::insert(const_reference value)
 {
-	this->_insert(value, this->m_root);
+	// this->_insert(value, this->m_root);
+	return;
 }
 
 template <typename T, typename node_type, typename Compare>
@@ -51,13 +52,13 @@ void Tree<T, node_type, Compare>::_clear(node_pointer root) noexcept
 
 	this->_clear(root->left);
 	this->_clear(root->right);
-	this->_remove(root);
+	delete root;
 }
 
 template <typename T>
 const T& Node<T>::get_value() const noexcept
 {
-	return this->m_data;
+	return this->val;
 }
 
 template <typename T>
@@ -96,13 +97,13 @@ void Tree<T, node_type, Compare>::_remove(node_type* root) noexcept
 
 		case 2:
 		{
-			tmp = this->successor(root->m_data);
+			tmp = this->successor(root->val);
 
-			T data_t = tmp->m_data;
+			T data_t = tmp->val;
 
 			this->_remove(tmp);
 
-			root->m_data = data_t;
+			root->val = data_t;
 
 			break;
 		}
@@ -122,12 +123,12 @@ typename Tree<T, node_type, Compare>::const_node_pointer Tree<T, node_type, Comp
 		return nullptr;
 	}
 
-	if (this->comp(value, root->m_data))
+	if (this->comp(value, root->val))
     {
 		return this->_find(value, root->left);
     }
 
-	else if (this->comp(root->m_data, value))
+	else if (this->comp(root->val, value))
 	{
 		return this->_find(value, root->right);
 	}

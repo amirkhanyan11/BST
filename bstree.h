@@ -27,12 +27,13 @@ namespace cocobolo
 
 	public:
 
-		T m_data = T{};
+		T val = T{};
 
 		Node	*left{nullptr};
 		Node	*right{nullptr};
 		Node	*parent{nullptr};
 	};
+
 
 	template <typename T>
 	struct RBnode
@@ -40,14 +41,12 @@ namespace cocobolo
 
 	public:
 
-    	__color m_color = __color::BLACK;
-
-    	RBnode(const T&,  RBnode* p = nullptr, __color color = __color::RED);
+		__color m_color = __color::BLACK;
+		RBnode(const T&,  RBnode* NIL, __color color = __color::RED);
 
 	public:
 
-		T m_data = T{};
-
+		T val = T{};
 		RBnode	*left	{nullptr};
 		RBnode	*right  {nullptr};
 		RBnode	*parent {nullptr};
@@ -81,7 +80,7 @@ namespace cocobolo
 
 	private:
 
-		virtual void 				_insert(const_reference value, node_pointer& root, node_pointer p = nullptr) = 0;
+		// virtual void 				_insert(const_reference value, node_pointer& root, node_pointer p = nullptr);
 		virtual void 				_remove(node_pointer) noexcept;
 		virtual const_node_pointer 	_find(const_reference value, node_pointer root) const noexcept;
 
@@ -119,7 +118,7 @@ namespace cocobolo
 		template <class func>
 		void 	preorder(func f) const noexcept;
 
-		void 					insert(const_reference value);
+		virtual void 			insert(const_reference value);
 		void 					remove(const_reference value) noexcept;
 		node_pointer 			find(const_reference value) noexcept;
 		const_node_pointer 		find(const_reference value) const noexcept;

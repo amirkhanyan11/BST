@@ -15,7 +15,7 @@ using namespace cocobolo;
 template <typename T>
 Node<T>& Node<T>::operator=(Node<T>&& other)
 {
-	m_data = other.m_data;
+	val = other.val;
 	left = other.left;
 	right = other.right;
 	other.left = nullptr, other.right = nullptr;
@@ -23,7 +23,7 @@ Node<T>& Node<T>::operator=(Node<T>&& other)
 
 
 template <typename T>
-Node<T>::Node(const T& value, Node<T> *p) : m_data{value}, parent{p} {}
+Node<T>::Node(const T& value, Node<T> *p) : val{value}, parent{p} {}
 
 
 

@@ -68,6 +68,7 @@
 		"__split_buffer": "cpp",
 		"complex": "cpp",
 		"cstring": "cpp",
-		"ctime": "cpp"
+		"ctime": "cpp",
+		"*.tpp": "cpp"
 	}
 }

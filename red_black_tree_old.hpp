@@ -5,23 +5,6 @@ using namespace cocobolo;
 using namespace std;
 
 
-template <typename T>
-RBnode<T>::RBnode(const T& val, RBnode* p, __color color)
-
-	:  	m_data{val},
-		parent{p},
-    	m_color{color}{}
-
-
-
-template <typename T, typename Compare>
-RedBlackTree<T, Compare>::RedBlackTree(std::initializer_list<value_type> lst)
-{
-    for (auto i : lst)
-    {
-        this->insert(i);
-    }
-}
 
 
 // template <typename T, typename Compare>
@@ -34,7 +17,7 @@ RedBlackTree<T, Compare>::RedBlackTree(std::initializer_list<value_type> lst)
 template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::_lrotate(node_pointer root)
 {
-    if (root == nullptr || root->right == nullptr)
+    if (!root || !root->right)
         return;
 
 	node_pointer p = root->parent;
@@ -54,7 +37,7 @@ void RedBlackTree<T, Compare>::_lrotate(node_pointer root)
 
     if (p != nullptr)
         p->right == root ? p->right = newroot : p->left = newroot;
-
+    
 	else
 		this->m_root = newroot;
 
@@ -81,7 +64,7 @@ void RedBlackTree<T, Compare>::_rrotate(node_pointer root)
 
 	newroot->parent = p;
 
-	// if (root->m_data == 15)
+	// if (root->val == 15)
 	root->parent = newroot;
 
 
@@ -127,10 +110,10 @@ void RedBlackTree<T, Compare>::_insert(const_reference value, node_pointer& root
 		return;
 	}
 
-	else if (this->comp(root->m_data, value))
+	else if (this->comp(root->val, value))
 		this->_insert(value, root->right, root);
 
-	else if (this->comp(value, root->m_data))
+	else if (this->comp(value, root->val))
 		this->_insert(value, root->left, root);
 }
 
@@ -177,8 +160,8 @@ void RedBlackTree<T, Compare>::_restore(node_pointer& root)
 			if (root->parent->left == root && root->parent->parent->right == root->parent)
 			{
 				_rrotate(root->parent);
-				// if (root->m_data == 12)
-				// 	std::cout << root->parent->m_data << std::endl;
+				// if (root->val == 12)
+				// 	std::cout << root->parent->val << std::endl;
 				_restore(root->right);
 			}
 			else if (root->parent->right == root && root->parent->parent->left == root->parent)
@@ -261,7 +244,7 @@ void  RedBlackTree<T, Compare>::_remove(node_pointer z) noexcept
 		node_pointer x = this->_successor(z);
 		cocobolo::__color color = x->m_color;
 
-		// std::cout << x->m_data << std::endl;
+		// std::cout << x->val << std::endl;
 
 		if (x != z->right)
 		{

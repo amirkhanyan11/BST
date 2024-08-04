@@ -15,39 +15,16 @@ using std::cout,
 
 int main()
 {
-	RedBlackTree<int> tree = {1, 2, 3, 4, 5};
+	RedBlackTree<int> tree = {1, 2, 3, 4, 5, 6, 7, 8};
+	// RedBlackTree<int> tree = {};
 
-	tree.remove(2);
+	// tree.insert(1);
 
-	// int x = 0;
+	tree.preorder([](const RBnode<int> *root) {
 
-	// cin >> x;
+		cout << root->val << "  ";
+	});
+	cout << endl;
 
-	// RedBlackTree<int> tree;
-
-
-	// while (x != 666)
-	// {
-	// 	tree.insert(x);
-
-		tree.preorder([](const RBnode<int> *root){
-
-			std::string col = (root->m_color == cocobolo::__color::RED) ? "RED" : "BLACK";
-
-			std::string childof;
-			if (root->parent == nullptr) childof = " Root";
-
-			else if (root->parent->left == root) childof = "Left child of ";
-
-			else if (root->parent->right == root) childof = "Right child of ";
-
-			if (root->parent == nullptr)
-					std::cout << root->m_data << " : " << col <<  " : " << childof << std::endl;
-			else
-				std::cout << root->m_data << " : " << col << " : " << childof << root->parent->m_data << std::endl;
-
-		});
-	// 	cin >> x;
-	// }
-
+	return 0;
 }

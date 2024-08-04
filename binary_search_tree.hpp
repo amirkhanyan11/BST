@@ -11,10 +11,10 @@ void BinarySearchTree<T, Compare>::_insert(const_reference value, node_pointer& 
 		return;
 	}
 
-	else if (this->comp(root->m_data, value))
+	else if (this->comp(root->val, value))
 		this->_insert(value, root->right, root);
 
-	else if (this->comp(value, root->m_data))
+	else if (this->comp(value, root->val))
 		this->_insert(value, root->left, root);
 }
 
