@@ -58,19 +58,19 @@ template <typename T, typename node_type, typename Compare>
 template <typename func>
 void Tree<T, node_type, Compare>::inorder(func f) const noexcept
 {
-	_inorder(this->m_root, f);
+	_inorder(this->root, f);
 }
 
 template <typename T, typename node_type, typename Compare>
 template <typename func>
 void Tree<T, node_type, Compare>::preorder(func f) const noexcept
 {
-	_preorder(this->m_root, f);
+	_preorder(this->root, f);
 }
 
 template <typename T, typename node_type, typename Compare>
 template <typename func>
 void Tree<T, node_type, Compare>::postorder(func f) const noexcept
 {
-	_postorder(this->m_root, f);
+	_postorder(this->root, f);
 }

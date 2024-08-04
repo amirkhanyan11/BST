@@ -31,11 +31,19 @@ public:
 
     RedBlackTree();
     RedBlackTree(std::initializer_list<value_type>);
-	virtual ~RedBlackTree();
+	~RedBlackTree();
 
 public:
 
-	void 		insert(const_reference value) override;
+	void 					insert(const_reference val) override;
+	void 					remove(const_reference val) noexcept override;
+	node_pointer 			find(const_reference val) noexcept override;
+	const_node_pointer 		find(const_reference val) const noexcept override;
+
+
+	reference 				min() noexcept;
+	reference 				max() noexcept;
+
 
 	template <class func>
 	void			preorder(func f);
@@ -45,10 +53,16 @@ public:
 
 private:
 
-    void	 		_lrotate(node_pointer root);
-    void 			_rrotate(node_pointer root);
+	node_pointer 	_min(node_pointer x) noexcept;
+	node_pointer 	_max(node_pointer x) noexcept;
+	void			_find(const_node_pointer x, const_reference val) const noexcept;
+	void			_delete(node_pointer z);
+	void			_transplant(node_pointer u, node_pointer v);
+    void	 		_lrotate(node_pointer x);
+    void 			_rrotate(node_pointer x);
 	void 			__insert(node_pointer z);
 	void 			_insert_fixup(node_pointer z);
+	void 			_delete_fixup(node_pointer z);
 
 	template <class func>
 	void			__preorder__(const_node_pointer root, func f);

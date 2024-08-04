@@ -39,7 +39,7 @@ void RedBlackTree<T, Compare>::_lrotate(node_pointer root)
         p->right == root ? p->right = newroot : p->left = newroot;
 
 	else
-		this->m_root = newroot;
+		this->root = newroot;
 
 }
 
@@ -72,7 +72,7 @@ void RedBlackTree<T, Compare>::_rrotate(node_pointer root)
         p->right == root ? p->right = newroot : p->left = newroot;
 
 	else
-		this->m_root = newroot;
+		this->root = newroot;
 
 }
 
@@ -120,19 +120,19 @@ void RedBlackTree<T, Compare>::_insert(const_reference value, node_pointer& root
 template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::_recolor(node_pointer root)
 {
-	root->m_color = (root->m_color == __color::RED) ? __color::BLACK : __color::RED;
+	root->color = (root->color == __color::RED) ? __color::BLACK : __color::RED;
 }
 
 template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::_restore(node_pointer& root)
 {
-	if (root == this->m_root)
+	if (root == this->root)
 	{
-		root->m_color = __color::BLACK;
+		root->color = __color::BLACK;
 		return;
 	}
 
-	if (root->p->m_color == __color::BLACK)
+	if (root->p->color == __color::BLACK)
 		return;
 
 	node_pointer uncle = this->_get_uncle(root);
@@ -140,7 +140,7 @@ void RedBlackTree<T, Compare>::_restore(node_pointer& root)
 
 	if (uncle == nullptr && (root->p == nullptr || root->p->p == nullptr)) return; // ??
 
-	__color uncle_color = (uncle == nullptr) ? __color::BLACK : uncle->m_color;
+	__color uncle_color = (uncle == nullptr) ? __color::BLACK : uncle->color;
 
 	switch (uncle_color)
 	{
@@ -197,9 +197,9 @@ void  RedBlackTree<T, Compare>::_transplant(node_pointer u, node_pointer v)
 {
 	if (u == nullptr) return;
 
-	if (u == this->m_root)
+	if (u == this->root)
 	{
-		this->m_root = v;
+		this->root = v;
 	}
 	else if (u == u->p->left)
 	{
@@ -224,7 +224,7 @@ void  RedBlackTree<T, Compare>::_remove(node_pointer z) noexcept
 	if (z->left == nullptr)
 	{
 		_transplant(z, z->right);
-		if (z->m_color == cocobolo::__color::BLACK)
+		if (z->color == cocobolo::__color::BLACK)
 		{
 			_remove_fixup(z->right);
 		}
@@ -233,7 +233,7 @@ void  RedBlackTree<T, Compare>::_remove(node_pointer z) noexcept
 	if (z->right == nullptr)
 	{
 		_transplant(z, z->left);
-		if (z->m_color == cocobolo::__color::BLACK)
+		if (z->color == cocobolo::__color::BLACK)
 		{
 			_remove_fixup(z->left);
 		}
@@ -242,7 +242,7 @@ void  RedBlackTree<T, Compare>::_remove(node_pointer z) noexcept
 	if (z->left != nullptr && z->right != nullptr) // neither is NIL
 	{
 		node_pointer x = this->_successor(z);
-		cocobolo::__color color = x->m_color;
+		cocobolo::__color color = x->color;
 
 		// std::cout << x->val << std::endl;
 
@@ -254,7 +254,7 @@ void  RedBlackTree<T, Compare>::_remove(node_pointer z) noexcept
 			x->left = z->left;
 			_transplant(z, x);
 		}
-		// if (z->m_color == cocobolo::__color::BLACK)
+		// if (z->color == cocobolo::__color::BLACK)
 		// {
 		// 	// idk
 		// }
@@ -268,18 +268,18 @@ void  RedBlackTree<T, Compare>::_remove(node_pointer z) noexcept
 template <typename T, typename Compare>
 void	RedBlackTree<T, Compare>::_remove_fixup(node_pointer x)
 {
-	while (x != this->m_root && x->m_color == __color::BLACK)
+	while (x != this->root && x->color == __color::BLACK)
 	{
 		node_pointer w = _get_sibling(x);
 
-		cocobolo::__color color = w->m_color;
+		cocobolo::__color color = w->color;
 
 		switch (color)
 		{
 			case __color::RED:
 			{
-				w->m_color = __color::BLACK;
-				x->p->m_color = __color::RED;
+				w->color = __color::BLACK;
+				x->p->color = __color::RED;
 				this->_lrotate(x->p);
 				w = this->_get_sibling(x); // rec
 				break;
@@ -287,33 +287,33 @@ void	RedBlackTree<T, Compare>::_remove_fixup(node_pointer x)
 
 			case __color::BLACK:
 			{
-				cocobolo::__color left_color = (w->left == nullptr) ? __color::BLACK : w->left->m_color;
-				cocobolo::__color right_color = (w->right == nullptr) ? __color::BLACK : w->right->m_color;
+				cocobolo::__color left_color = (w->left == nullptr) ? __color::BLACK : w->left->color;
+				cocobolo::__color right_color = (w->right == nullptr) ? __color::BLACK : w->right->color;
 
 				if (left_color == __color::BLACK && right_color == __color::BLACK)
 				{
-					w->m_color = __color::RED;
+					w->color = __color::RED;
 					x = x->p; // rec
 				}
 
 				else if (left_color == __color::RED && right_color == __color::BLACK)
 				{
-					w->left->m_color = __color::BLACK;
-					w->m_color = __color::RED;
+					w->left->color = __color::BLACK;
+					w->color = __color::RED;
 					this->_rrotate(w);
 					w = this->_get_sibling(x);
 				}
 
 				else if (right_color == __color::RED)
 				{
-					w->m_color = x->p->m_color;
-					x->p->m_color = __color::BLACK;
-					w->right->m_color = __color::BLACK;
+					w->color = x->p->color;
+					x->p->color = __color::BLACK;
+					w->right->color = __color::BLACK;
 					this->_lrotate(x->p);
-					x = this->m_root;
+					x = this->root;
 				}
 			}
 		}
-		x->m_color = __color::BLACK;
+		x->color = __color::BLACK;
 	}
 }

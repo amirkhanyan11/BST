@@ -6,8 +6,9 @@
 #include "ctors.tpp"
 #include "rotate.tpp"
 #include "insert.tpp"
+#include "remove.tpp"
 #include "traverse.tpp"
-
+#include "find.tpp"
 
 
 

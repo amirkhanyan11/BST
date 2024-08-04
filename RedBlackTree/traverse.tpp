@@ -25,7 +25,7 @@ template <typename T, typename Compare>
 template <class func>
 void RedBlackTree<T, Compare>::preorder(func f)
 {
-    __preorder__(this->m_root, f);
+    __preorder__(this->root, f);
 }
 
 template <typename T, typename Compare>
@@ -43,7 +43,7 @@ template <typename T, typename Compare>
 template <class func>
 void RedBlackTree<T, Compare>::postorder(func f)
 {
-    __postorder__(this->m_root, f);
+    __postorder__(this->root, f);
 }
 
 

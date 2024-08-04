@@ -24,7 +24,7 @@ void RedBlackTree<T, Compare>::_lrotate(node_pointer x)
 
     y->p = x->p;
 
-    if (x->p == NIL) this->m_root = y;
+    if (x->p == NIL) this->root = y;
 
     else if (x == x->p->left) x->p->left = y;
 
@@ -49,7 +49,7 @@ void RedBlackTree<T, Compare>::_rrotate(node_pointer x)
 
     y->p = x->p;
 
-    if (x->p == NIL) this->m_root = y;
+    if (x->p == NIL) this->root = y;
 
     else if (x == x->p->left) x->p->left = y;
 

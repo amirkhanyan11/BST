@@ -12,7 +12,7 @@ typename Tree<T, node_type, Compare>::size_type Tree<T, node_type, Compare>::_si
 template <typename T, typename node_type, typename Compare>
 typename Tree<T, node_type, Compare>::size_type Tree<T, node_type, Compare>::size() const noexcept
 {
-	return _size(this->m_root);
+	return _size(this->root);
 }
 
 template <typename T, typename node_type, typename Compare>
@@ -24,5 +24,5 @@ typename Tree<T, node_type, Compare>::size_type Tree<T, node_type, Compare>::_he
 template <typename T, typename node_type, typename Compare>
 typename Tree<T, node_type, Compare>::size_type Tree<T, node_type, Compare>::height() const noexcept
 {
-	return _height(this->m_root);
+	return _height(this->root);
 }

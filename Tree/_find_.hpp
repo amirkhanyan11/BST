@@ -5,13 +5,13 @@ using namespace cocobolo;
 template <typename T, typename node_type, typename Compare>
 typename Tree<T, node_type, Compare>::const_node_pointer Tree<T, node_type, Compare>::find_min() const noexcept
 {
-	return _find_min(this->m_root);
+	return _find_min(this->root);
 }
 
 template <typename T, typename node_type, typename Compare>
 typename Tree<T, node_type, Compare>::const_node_pointer Tree<T, node_type, Compare>::find_max() const noexcept
 {
-	return _find_max(this->m_root);
+	return _find_max(this->root);
 }
 
 template <typename T, typename node_type, typename Compare>

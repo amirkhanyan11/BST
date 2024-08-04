@@ -19,7 +19,7 @@ template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::__insert(node_pointer z)
 {
 	node_pointer y = NIL;
-	node_pointer x = this->m_root;
+	node_pointer x = this->root;
 
     while (x != NIL)
     {
@@ -34,7 +34,7 @@ void RedBlackTree<T, Compare>::__insert(node_pointer z)
 
     z->p = y;
 
-    if (y == NIL) this->m_root = z;
+    if (y == NIL) this->root = z;
 
     else if (z->val < y->val) y->left = z;
 
@@ -46,17 +46,17 @@ void RedBlackTree<T, Compare>::__insert(node_pointer z)
 template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::_insert_fixup(node_pointer z)
 {
-    while (z->p->m_color == __color::RED)
+    while (z->p->color == __color::RED)
     {
         if (z->p == z->p->p->left)
         {
             node_pointer y = z->p->p->right;
 
-            if (y->m_color == __color::RED)
+            if (y->color == __color::RED)
             {
-                y->m_color = __color::BLACK;
-                z->p->m_color = __color::BLACK;
-                z->p->p->m_color = __color::RED;
+                y->color = __color::BLACK;
+                z->p->color = __color::BLACK;
+                z->p->p->color = __color::RED;
                 z = z->p->p;
             }
             else
@@ -67,8 +67,8 @@ void RedBlackTree<T, Compare>::_insert_fixup(node_pointer z)
                     _lrotate(z);
                 }
 
-                z->p->m_color = __color::BLACK;
-                z->p->p->m_color = __color::RED;
+                z->p->color = __color::BLACK;
+                z->p->p->color = __color::RED;
                 _rrotate(z->p->p);
             }
         }
@@ -76,11 +76,11 @@ void RedBlackTree<T, Compare>::_insert_fixup(node_pointer z)
         {
             node_pointer y = z->p->p->left;
 
-            if (y->m_color == __color::RED)
+            if (y->color == __color::RED)
             {
-                y->m_color = __color::BLACK;
-                z->p->m_color = __color::BLACK;
-                z->p->p->m_color = __color::RED;
+                y->color = __color::BLACK;
+                z->p->color = __color::BLACK;
+                z->p->p->color = __color::RED;
                 z = z->p->p;
             }
             else
@@ -91,13 +91,13 @@ void RedBlackTree<T, Compare>::_insert_fixup(node_pointer z)
                     _rrotate(z);
                 }
 
-                z->p->m_color = __color::BLACK;
-                z->p->p->m_color = __color::RED;
+                z->p->color = __color::BLACK;
+                z->p->p->color = __color::RED;
                 _lrotate(z->p->p);
             }
         }
     }
-    this->m_root->m_color = __color::BLACK;
+    this->root->color = __color::BLACK;
 }
 
 

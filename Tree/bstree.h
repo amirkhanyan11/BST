@@ -41,7 +41,7 @@ namespace cocobolo
 
 	public:
 
-		__color m_color = __color::BLACK;
+		__color color = __color::BLACK;
 		RBnode(const T&,  RBnode* NIL, __color color = __color::RED);
 
 	public:
@@ -75,7 +75,7 @@ namespace cocobolo
 	protected:
 
 
-		node_pointer m_root = nullptr;
+		node_pointer root = nullptr;
 		Compare 	 comp 	= Compare{};
 
 	private:
@@ -118,10 +118,10 @@ namespace cocobolo
 		template <class func>
 		void 	preorder(func f) const noexcept;
 
-		virtual void 			insert(const_reference value);
-		void 					remove(const_reference value) noexcept;
-		node_pointer 			find(const_reference value) noexcept;
-		const_node_pointer 		find(const_reference value) const noexcept;
+		virtual void 					insert(const_reference value);
+		virtual void 					remove(const_reference value) noexcept;
+		virtual node_pointer 			find(const_reference value) noexcept;
+		virtual const_node_pointer 		find(const_reference value) const noexcept;
 
 		node_pointer 			find_min() noexcept;
 		node_pointer 			find_max() noexcept;

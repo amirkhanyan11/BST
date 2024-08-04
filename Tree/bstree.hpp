@@ -30,6 +30,6 @@ Node<T>::Node(const T& value, Node<T> *p) : val{value}, p{p} {}
 template <typename T, typename node_type, typename Compare>
 Tree<T, node_type, Compare>::~Tree()
 {
-	_clear(m_root);
-	this->m_root = nullptr;
+	_clear(root);
+	this->root = nullptr;
 }
