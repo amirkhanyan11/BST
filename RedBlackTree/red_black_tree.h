@@ -1,8 +1,7 @@
 #ifndef __REDBLACKTREE__
 #define __REDBLACKTREE__
 
-#include "bstree.h"
-
+#include "../Tree/bstree.h"
 
 namespace cocobolo
 {
@@ -40,7 +39,7 @@ public:
 
 	template <class func>
 	void			preorder(func f);
-	
+
 	template <class func>
 	void			postorder(func f);
 
