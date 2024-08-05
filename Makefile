@@ -1,5 +1,5 @@
 NAME = bingchiling
-zibil = g++ -g
+zibil = g++ -g #-Wall -Wextra
 jiv = main.cpp
 aaa = -o
 all:
