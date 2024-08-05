@@ -48,7 +48,4 @@ void RedBlackTree<T, Compare>::postorder(func f)
 
 
 
-
-
-
 #endif // __RBT_TRAVERSE_TPP__
