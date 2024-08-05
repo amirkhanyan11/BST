@@ -56,7 +56,7 @@ void RedBlackTree<T, Compare>::_delete(node_pointer z)
 
 		if (y->p == z)
 		{
-			x->p = z;
+			x->p = y;
 		}
 
 		else
@@ -72,6 +72,9 @@ void RedBlackTree<T, Compare>::_delete(node_pointer z)
 		y->color = x->color;
 	}
 
+	delete z;
+	z = nullptr;
+
 	if (y_orig_color == __color::BLACK)
 	{
 		_delete_fixup(x);
@@ -79,25 +82,78 @@ void RedBlackTree<T, Compare>::_delete(node_pointer z)
 }
 
 
+template <typename T, typename Compare>
+void RedBlackTree<T, Compare>::_delete_fixup(node_pointer x)
+{
+	while (x != this->root and x->color == __color::BLACK)
+	{
+		node_pointer w = NIL;
+		if (x == x->p->left)
+		{
+			w = x->p->right;
+			if (w->color == __color::RED) // case 1
+			{
+				w->color = __color::BLACK;
+				x->p->color = __color::RED;
+				_lrotate(x->p);
+				w = x->p->right;
+			}
+			if (w->left->color == __color::BLACK and w->right->color == __color::BLACK) // case 2
+			{
+				w->color = __color::RED;
+				x = x->p;
+			}
+			else
+			{
+				if (w->right->color == __color::BLACK) // case 3
+				{
+					w->left->color = __color::BLACK;
+					w->color = __color::RED;
+					_rrotate(w);
+					w = x->p->right;
+				}
 
-// template <typename T, typename Compare>
-// void RedBlackTree<T, Compare>::_delete_fixup(node_pointer x)
-// {
-// 	while (x != this->root and x->color == __color::BLACK)
-// 	{
-// 		node_pointer w = NIL;
-// 		if (x == x->p->left)
-// 		{
-// 			w = x->p->right;
-// 			if (w->color == __color::RED) // case 1
-// 			{
-// 				w->color = __color::BLACK;
-// 				x->p->color = __color::RED;
-// 				_lrotate(x->p);
-// 				w = x->p->right;
-// 			}
-// 		}
-// 	}
-// }
+				w->color = x->p->color; // case 4
+				x->p->color = __color::BLACK;
+				w->right->color = __color::BLACK;
+				_lrotate(x->p);
+				x = this->root;
+			}
+		}
+		else
+		{
+			w = x->p->left;
+			if (w->color == __color::RED) // case 1
+			{
+				w->color = __color::BLACK;
+				x->p->color = __color::RED;
+				_lrotate(x->p);
+				w = x->p->left;
+			}
+			if (w->right->color == __color::BLACK and w->left->color == __color::BLACK) // case 2
+			{
+				w->color = __color::RED;
+				x = x->p;
+			}
+			else
+			{
+				if (w->left->color == __color::BLACK) // case 3
+				{
+					w->right->color = __color::BLACK;
+					w->color = __color::RED;
+					_rrotate(w);
+					w = x->p->left;
+				}
+
+				w->color = x->p->color; // case 4
+				x->p->color = __color::BLACK;
+				w->left->color = __color::BLACK;
+				_lrotate(x->p);
+				x = this->root;
+			}
+		}
+	}
+	x->color = __color::BLACK;
+}
 
 #endif // __RBT_REMOVE_TPP__

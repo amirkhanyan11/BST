@@ -55,7 +55,6 @@ private:
 
 	node_pointer 	_min(node_pointer x) noexcept;
 	node_pointer 	_max(node_pointer x) noexcept;
-	void			_find(const_node_pointer x, const_reference val) const noexcept;
 	void			_delete(node_pointer z);
 	void			_transplant(node_pointer u, node_pointer v);
     void	 		_lrotate(node_pointer x);
@@ -63,6 +62,7 @@ private:
 	void 			__insert(node_pointer z);
 	void 			_insert_fixup(node_pointer z);
 	void 			_delete_fixup(node_pointer z);
+	const_node_pointer			_find(const_node_pointer x, const_reference val) const noexcept;
 
 	template <class func>
 	void			__preorder__(const_node_pointer root, func f);

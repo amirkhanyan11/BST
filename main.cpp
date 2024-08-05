@@ -15,10 +15,12 @@ using std::cout,
 
 int main()
 {
-	RedBlackTree<int> tree = {1, 2, 3, 4, 5, 6, 7, 8};
-	// RedBlackTree<int> tree = {};
+	RedBlackTree<int> tree = {1, 2, 3, 4, 5, 6, 7};
 
-	// tree.insert(1);
+	tree.remove(5);
+	tree.remove(4);
+	tree.remove(6);
+	tree.remove(2);
 
 	tree.preorder([](const RBnode<int> *root) {
 

@@ -10,6 +10,4 @@
 #include "traverse.tpp"
 #include "find.tpp"
 
-
-
 #endif // __REDBLACKTREE_TPP__
