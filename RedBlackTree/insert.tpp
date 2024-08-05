@@ -101,27 +101,4 @@ void RedBlackTree<T, Compare>::_insert_fixup(node_pointer z)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif // __RBT_INSERT_TPP__

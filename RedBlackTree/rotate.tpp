@@ -61,8 +61,4 @@ void RedBlackTree<T, Compare>::_rrotate(node_pointer x)
 }
 
 
-
-
-
-
 #endif // __RBT_ROTATE_TPP__
