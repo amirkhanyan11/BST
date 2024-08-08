@@ -69,7 +69,7 @@ void RedBlackTree<T, Compare>::_delete(node_pointer z)
 		_transplant(z, y);
 		y->left = z->left;
 		y->left->p = y;
-		y->color = x->color;
+		y->color = z->color;
 	}
 
 	delete z;
