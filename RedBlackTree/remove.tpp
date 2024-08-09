@@ -127,7 +127,7 @@ void RedBlackTree<T, Compare>::_delete_fixup(node_pointer x)
 			{
 				w->color = __color::BLACK;
 				x->p->color = __color::RED;
-				_lrotate(x->p);
+				_rrotate(x->p);
 				w = x->p->left;
 			}
 			if (w->right->color == __color::BLACK and w->left->color == __color::BLACK) // case 2
@@ -141,14 +141,14 @@ void RedBlackTree<T, Compare>::_delete_fixup(node_pointer x)
 				{
 					w->right->color = __color::BLACK;
 					w->color = __color::RED;
-					_rrotate(w);
+					_lrotate(w);
 					w = x->p->left;
 				}
 
 				w->color = x->p->color; // case 4
 				x->p->color = __color::BLACK;
 				w->left->color = __color::BLACK;
-				_lrotate(x->p);
+				_rrotate(x->p);
 				x = this->root;
 			}
 		}
