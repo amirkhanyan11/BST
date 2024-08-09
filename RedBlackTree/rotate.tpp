@@ -13,8 +13,6 @@ using  namespace std;
 template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::_lrotate(node_pointer x)
 {
-    if (!x || !x->right)
-        return;
 
     node_pointer y = x->right;
 
@@ -38,9 +36,6 @@ void RedBlackTree<T, Compare>::_lrotate(node_pointer x)
 template <typename T, typename Compare>
 void RedBlackTree<T, Compare>::_rrotate(node_pointer x)
 {
-    if (!x || !x->left)
-        return;
-
     node_pointer y = x->left;
 
     x->left = y->right;
